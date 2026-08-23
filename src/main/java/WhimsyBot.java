@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Starts the Whimsy Bot chatbot application.
  */
@@ -19,9 +21,22 @@ public class WhimsyBot {
         System.out.println(SEPARATOR);
         System.out.println(banner);
         System.out.println("Hello! I'm Whimsy Bot.");
-        System.out.println("What can I do for you?");
+        System.out.println("What can I do for you today?");
         System.out.println(SEPARATOR);
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println(SEPARATOR);
+
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNextLine()) {
+            String command = scanner.nextLine();
+            System.out.println(SEPARATOR);
+
+            if (command.equals("bye")) {
+                System.out.println("Bye. Hope to see you again soon!");
+                System.out.println(SEPARATOR);
+                break;
+            }
+
+            System.out.println(command);
+            System.out.println(SEPARATOR);
+        }
     }
 }
