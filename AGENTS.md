@@ -1,4 +1,4 @@
-# Project context
+  # Project context
 
 This repository is a starter template for a greenfield Java project used in an introductory software engineering course in an undergraduate computer science program. Students use it as the starting point for their own projects.
 
@@ -9,8 +9,8 @@ Unless the user says otherwise, assume that you are assisting a student working 
 # Student profile
 
 * Prior knowledge: Basic Java and OOP concepts.
-* Level of programming experience: [to be filled]
-* IDE and level of expertise: [to be filled]
+* Level of programming experience: Somewhat of a beginner
+* IDE and level of expertise: Used intelliJ and VSCode prior to this
 
 # Guidance for interacting with users
 
