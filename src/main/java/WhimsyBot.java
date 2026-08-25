@@ -25,8 +25,7 @@ public class WhimsyBot {
         System.out.println("What can I do for you today?");
         System.out.println(SEPARATOR);
 
-        String[] tasks = new String[MAX_TASKS];
-        boolean[] isDone = new boolean[MAX_TASKS];
+        Task[] tasks = new Task[MAX_TASKS];
         int taskCount = 0;
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
@@ -42,25 +41,47 @@ public class WhimsyBot {
             if (command.equals("list")) {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < taskCount; i++) {
-                    String status = isDone[i] ? "[X]" : "[ ]";
-                    System.out.println((i + 1) + "." + status + " " + tasks[i]);
+                    System.out.println((i + 1) + "." + tasks[i]);
                 }
             } else if (command.startsWith("mark ")) {
                 int taskNumber = Integer.parseInt(command.substring(5));
-                isDone[taskNumber - 1] = true;
+                tasks[taskNumber - 1].markAsDone();
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println("  [X] " + tasks[taskNumber - 1]);
+                System.out.println("  " + tasks[taskNumber - 1]);
             } else if (command.startsWith("unmark ")) {
                 int taskNumber = Integer.parseInt(command.substring(7));
-                isDone[taskNumber - 1] = false;
+                tasks[taskNumber - 1].unmarkAsDone();
                 System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println("  [ ] " + tasks[taskNumber - 1]);
-            } else if (taskCount < MAX_TASKS) {
-                tasks[taskCount] = command;
+                System.out.println("  " + tasks[taskNumber - 1]);
+            } else if (command.startsWith("todo ") && taskCount < MAX_TASKS) {
+                tasks[taskCount] = new Todo(command.substring(5));
                 taskCount++;
-                System.out.println("added: " + command);
+                printAddedTask(tasks[taskCount - 1], taskCount);
+            } else if (command.startsWith("deadline ") && taskCount < MAX_TASKS) {
+                String[] parts = command.substring(9).split(" /by ", 2);
+                tasks[taskCount] = new Deadline(parts[0], parts[1]);
+                taskCount++;
+                printAddedTask(tasks[taskCount - 1], taskCount);
+            } else if (command.startsWith("event ") && taskCount < MAX_TASKS) {
+                String[] descriptionAndTimes = command.substring(6).split(" /from ", 2);
+                String[] times = descriptionAndTimes[1].split(" /to ", 2);
+                tasks[taskCount] = new Event(descriptionAndTimes[0], times[0], times[1]);
+                taskCount++;
+                printAddedTask(tasks[taskCount - 1], taskCount);
             }
             System.out.println(SEPARATOR);
         }
+    }
+
+    /**
+     * Displays the confirmation shown after adding a task.
+     *
+     * @param task the task that was added
+     * @param taskCount the number of tasks now in the list
+     */
+    private static void printAddedTask(Task task, int taskCount) {
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + task);
+        System.out.println("Now you have " + taskCount + " tasks in the list.");
     }
 }

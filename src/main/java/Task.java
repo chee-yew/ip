@@ -24,9 +24,6 @@ public class Task {
         return isDone ? "X" : " ";
     }
 
-    /**
-     * Marks this task as complete.
-     */
     public void markAsDone() {
         isDone = true;
     }
@@ -36,5 +33,15 @@ public class Task {
      */
     public void unmarkAsDone() {
         isDone = false;
+    }
+
+    /**
+     * Returns the common, human-readable portion of every task.
+     *
+     * @return this task's completion status and description
+     */
+    @Override
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + description;
     }
 }
