@@ -63,10 +63,15 @@ foreach ($caseMatch in $caseMatches) {
     $input = Get-SectionBlock $caseText "Input"
     $expected = Normalize-Output (Get-SectionBlock $caseText "Expected output")
 
+    # Input is fed via a temp file with shell redirection rather than Process.StandardInput:
+    # merely accessing that property makes .NET write a UTF-8 BOM onto the pipe before any
+    # content, which corrupts the first line Java reads.
+    $inputFile = Join-Path $outputDirectory "stdin.txt"
+    [System.IO.File]::WriteAllText($inputFile, ($input + "`n"), (New-Object System.Text.UTF8Encoding($false)))
+
     $processInfo = [System.Diagnostics.ProcessStartInfo]::new()
-    $processInfo.FileName = "java"
-    $processInfo.Arguments = "-cp `"$outputDirectory`" WhimsyBot"
-    $processInfo.RedirectStandardInput = $true
+    $processInfo.FileName = "cmd.exe"
+    $processInfo.Arguments = "/c java -cp `"$outputDirectory`" WhimsyBot < `"$inputFile`""
     $processInfo.RedirectStandardOutput = $true
     $processInfo.RedirectStandardError = $true
     $processInfo.UseShellExecute = $false
@@ -74,8 +79,6 @@ foreach ($caseMatch in $caseMatches) {
     $process = [System.Diagnostics.Process]::new()
     $process.StartInfo = $processInfo
     [void]$process.Start()
-    $process.StandardInput.Write($input + "`n")
-    $process.StandardInput.Close()
     $actual = Normalize-Output ($process.StandardOutput.ReadToEnd())
     $errorOutput = Normalize-Output ($process.StandardError.ReadToEnd())
     $process.WaitForExit()
