@@ -108,3 +108,72 @@ ____________________________________________________________
 Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## Test Case: error handling for invalid input
+
+**Aim:** Verify that Whimsy Bot reports a clear error instead of crashing on an unrecognised command, a task added with no description, a deadline/event missing its date markers, and an out-of-range or non-numeric mark index — and that it keeps working normally afterwards.
+
+### Input
+
+```text
+blah
+todo
+deadline return book
+event project meeting
+mark 5
+mark abc
+todo read book
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _       ___     _                         
+| |     / / |__ (_)_ __ ___  ___ _   _     
+| | /| / /| '_ \| | '_ ` _ \/ __| | | |    
+| |/ |/ / | | | | | | | | | \__ \ |_| |    
+|__/|__/  |_| |_|_|_| |_| |_|___/\__, |    
+                                  |___/     
+ ____        _   
+| __ )  ___ | |_ 
+|  _ \ / _ \| __|
+| |_) | (_) | |_ 
+|____/ \___/ \__|
+
+Hello! I'm Whimsy Bot.
+What can I do for you today?
+____________________________________________________________
+____________________________________________________________
+OOPS!!! I'm sorry, but I don't know what that means :-(
+____________________________________________________________
+____________________________________________________________
+OOPS!!! The description of a todo cannot be empty.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! Please specify a deadline, e.g. 'deadline return book /by Sunday'.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! Please specify the event's start and end, e.g. 'event project meeting /from Monday 2pm /to 4pm'.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! There is no task number 5 in your list.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! The task number must be a whole number.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] read book
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
