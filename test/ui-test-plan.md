@@ -1,0 +1,110 @@
+# Console UI test plan
+
+The test runner compiles the program and starts a fresh session for each case. Expected output is exact apart from Windows/Linux line-ending differences.
+
+## Test Case: add, list, and exit
+
+**Aim:** Verify that a todo can be added, listed, and retained until the user exits.
+
+### Input
+
+```text
+todo read book
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _       ___     _                         
+| |     / / |__ (_)_ __ ___  ___ _   _     
+| | /| / /| '_ \| | '_ ` _ \/ __| | | |    
+| |/ |/ / | | | | | | | | | \__ \ |_| |    
+|__/|__/  |_| |_|_|_| |_| |_|___/\__, |    
+                                  |___/     
+ ____        _   
+| __ )  ___ | |_ 
+|  _ \ / _ \| __|
+| |_) | (_) | |_ 
+|____/ \___/ \__|
+
+Hello! I'm Whimsy Bot.
+What can I do for you today?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] read book
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## Test Case: task types and status changes
+
+**Aim:** Verify deadline and event formatting, plus marking and unmarking a task.
+
+### Input
+
+```text
+deadline return book /by Friday
+event project meeting /from Monday 2pm /to 4pm
+mark 1
+unmark 1
+list
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _       ___     _                         
+| |     / / |__ (_)_ __ ___  ___ _   _     
+| | /| / /| '_ \| | '_ ` _ \/ __| | | |    
+| |/ |/ / | | | | | | | | | \__ \ |_| |    
+|__/|__/  |_| |_|_|_| |_| |_|___/\__, |    
+                                  |___/     
+ ____        _   
+| __ )  ___ | |_ 
+|  _ \ / _ \| __|
+| |_) | (_) | |_ 
+|____/ \___/ \__|
+
+Hello! I'm Whimsy Bot.
+What can I do for you today?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] return book (by: Friday)
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] project meeting (from: Monday 2pm to: 4pm)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [D][X] return book (by: Friday)
+____________________________________________________________
+____________________________________________________________
+OK, I've marked this task as not done yet:
+  [D][ ] return book (by: Friday)
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][ ] return book (by: Friday)
+2.[E][ ] project meeting (from: Monday 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```

@@ -33,3 +33,13 @@ Ensure that Java 25 is used when running the application or build tasks. On macO
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.
 Do not commit or push unless explicitly asked.
+
+## UI testing workflow
+
+After any code change that affects the program's console behavior (a command, prompt, message, or output format), before treating the change as done:
+
+1. Update `test/ui-test-plan.md` if the change adds, removes, or alters any user-visible command or output. Keep every case's aim, input, and expected output current.
+2. Invoke the `test-ui` skill (`.codex/skills/test-ui`) to run the console UI test plan against the updated program.
+3. If a test case fails, stop immediately and report that case's actual and expected output. Fix the code or the plan, then rerun the full test plan from the beginning.
+
+Skip this workflow for changes with no observable effect on console input/output, such as internal refactors, build/config edits, or non-UI unit tests.
