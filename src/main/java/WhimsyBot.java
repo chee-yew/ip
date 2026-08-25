@@ -54,6 +54,17 @@ public class WhimsyBot {
                     tasks[taskNumber - 1].unmarkAsDone();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println("  " + tasks[taskNumber - 1]);
+                } else if (command.equals("delete") || command.startsWith("delete ")) {
+                    int taskNumber = parseTaskNumber(command.substring(6).trim(), "delete", taskCount);
+                    Task removedTask = tasks[taskNumber - 1];
+                    for (int i = taskNumber - 1; i < taskCount - 1; i++) {
+                        tasks[i] = tasks[i + 1];
+                    }
+                    tasks[taskCount - 1] = null;
+                    taskCount--;
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println("  " + removedTask);
+                    System.out.println("Now you have " + taskCount + " tasks in the list.");
                 } else if (command.equals("todo") || command.startsWith("todo ")) {
                     String description = command.substring(4).trim();
                     if (description.isEmpty()) {
