@@ -32,30 +32,38 @@ public class WhimsyBot {
             String command = scanner.nextLine();
             System.out.println(SEPARATOR);
 
-            if (command.equals("bye")) {
-                System.out.println("Bye. Hope to see you again soon!");
-                System.out.println(SEPARATOR);
-                break;
-            }
+            String[] splitCommand = command.split(" ", 2);
+            String commandWord = splitCommand[0];
+            String arguments = splitCommand.length > 1 ? splitCommand[1].trim() : "";
 
             try {
-                if (command.equals("list")) {
+                switch (CommandType.fromString(commandWord)) {
+                case BYE:
+                    System.out.println("Bye. Hope to see you again soon!");
+                    System.out.println(SEPARATOR);
+                    return;
+                case LIST:
                     System.out.println("Here are the tasks in your list:");
                     for (int i = 0; i < taskCount; i++) {
                         System.out.println((i + 1) + "." + tasks[i]);
                     }
-                } else if (command.equals("mark") || command.startsWith("mark ")) {
-                    int taskNumber = parseTaskNumber(command.substring(4).trim(), "mark", taskCount);
+                    break;
+                case MARK: {
+                    int taskNumber = parseTaskNumber(arguments, "mark", taskCount);
                     tasks[taskNumber - 1].markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println("  " + tasks[taskNumber - 1]);
-                } else if (command.equals("unmark") || command.startsWith("unmark ")) {
-                    int taskNumber = parseTaskNumber(command.substring(6).trim(), "unmark", taskCount);
+                    break;
+                }
+                case UNMARK: {
+                    int taskNumber = parseTaskNumber(arguments, "unmark", taskCount);
                     tasks[taskNumber - 1].unmarkAsDone();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println("  " + tasks[taskNumber - 1]);
-                } else if (command.equals("delete") || command.startsWith("delete ")) {
-                    int taskNumber = parseTaskNumber(command.substring(6).trim(), "delete", taskCount);
+                    break;
+                }
+                case DELETE: {
+                    int taskNumber = parseTaskNumber(arguments, "delete", taskCount);
                     Task removedTask = tasks[taskNumber - 1];
                     for (int i = taskNumber - 1; i < taskCount - 1; i++) {
                         tasks[i] = tasks[i + 1];
@@ -65,21 +73,22 @@ public class WhimsyBot {
                     System.out.println("Noted. I've removed this task:");
                     System.out.println("  " + removedTask);
                     System.out.println("Now you have " + taskCount + " tasks in the list.");
-                } else if (command.equals("todo") || command.startsWith("todo ")) {
-                    String description = command.substring(4).trim();
-                    if (description.isEmpty()) {
+                    break;
+                }
+                case TODO:
+                    if (arguments.isEmpty()) {
                         throw new WhimsyBotException("OOPS!!! The description of a todo cannot be empty.");
                     }
                     checkListNotFull(taskCount);
-                    tasks[taskCount] = new Todo(description);
+                    tasks[taskCount] = new Todo(arguments);
                     taskCount++;
                     printAddedTask(tasks[taskCount - 1], taskCount);
-                } else if (command.equals("deadline") || command.startsWith("deadline ")) {
-                    String rest = command.substring(8).trim();
-                    if (rest.isEmpty()) {
+                    break;
+                case DEADLINE: {
+                    if (arguments.isEmpty()) {
                         throw new WhimsyBotException("OOPS!!! The description of a deadline cannot be empty.");
                     }
-                    String[] parts = rest.split(" /by ", 2);
+                    String[] parts = arguments.split(" /by ", 2);
                     String description = parts[0].trim();
                     if (description.isEmpty()) {
                         throw new WhimsyBotException("OOPS!!! The description of a deadline cannot be empty.");
@@ -93,12 +102,13 @@ public class WhimsyBot {
                     tasks[taskCount] = new Deadline(description, parts[1].trim());
                     taskCount++;
                     printAddedTask(tasks[taskCount - 1], taskCount);
-                } else if (command.equals("event") || command.startsWith("event ")) {
-                    String rest = command.substring(5).trim();
-                    if (rest.isEmpty()) {
+                    break;
+                }
+                case EVENT: {
+                    if (arguments.isEmpty()) {
                         throw new WhimsyBotException("OOPS!!! The description of an event cannot be empty.");
                     }
-                    String[] descriptionAndTimes = rest.split(" /from ", 2);
+                    String[] descriptionAndTimes = arguments.split(" /from ", 2);
                     String description = descriptionAndTimes[0].trim();
                     if (description.isEmpty()) {
                         throw new WhimsyBotException("OOPS!!! The description of an event cannot be empty.");
@@ -118,8 +128,8 @@ public class WhimsyBot {
                     tasks[taskCount] = new Event(description, times[0].trim(), times[1].trim());
                     taskCount++;
                     printAddedTask(tasks[taskCount - 1], taskCount);
-                } else {
-                    throw new WhimsyBotException("OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    break;
+                }
                 }
             } catch (WhimsyBotException e) {
                 System.out.println(e.getMessage());
