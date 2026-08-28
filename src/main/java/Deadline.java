@@ -9,6 +9,11 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    /** Returns the deadline text for persistence. */
+    public String getBy() {
+        return by;
+    }
+
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";

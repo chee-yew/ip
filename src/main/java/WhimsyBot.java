@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.List;
 
 /**
  * Starts the Whimsy Bot chatbot application.
@@ -26,7 +27,12 @@ public class WhimsyBot {
         System.out.println(SEPARATOR);
 
         Task[] tasks = new Task[MAX_TASKS];
-        int taskCount = 0;
+        Storage storage = new Storage();
+        List<Task> savedTasks = storage.load();
+        int taskCount = Math.min(savedTasks.size(), MAX_TASKS);
+        for (int i = 0; i < taskCount; i++) {
+            tasks[i] = savedTasks.get(i);
+        }
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
             String command = scanner.nextLine();
@@ -53,6 +59,7 @@ public class WhimsyBot {
                     tasks[taskNumber - 1].markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println("  " + tasks[taskNumber - 1]);
+                    saveTasks(tasks, taskCount);
                     break;
                 }
                 case UNMARK: {
@@ -60,6 +67,7 @@ public class WhimsyBot {
                     tasks[taskNumber - 1].unmarkAsDone();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println("  " + tasks[taskNumber - 1]);
+                    saveTasks(tasks, taskCount);
                     break;
                 }
                 case DELETE: {
@@ -73,6 +81,7 @@ public class WhimsyBot {
                     System.out.println("Noted. I've removed this task:");
                     System.out.println("  " + removedTask);
                     System.out.println("Now you have " + taskCount + " tasks in the list.");
+                    saveTasks(tasks, taskCount);
                     break;
                 }
                 case TODO:
@@ -83,6 +92,7 @@ public class WhimsyBot {
                     tasks[taskCount] = new Todo(arguments);
                     taskCount++;
                     printAddedTask(tasks[taskCount - 1], taskCount);
+                    saveTasks(tasks, taskCount);
                     break;
                 case DEADLINE: {
                     if (arguments.isEmpty()) {
@@ -102,6 +112,7 @@ public class WhimsyBot {
                     tasks[taskCount] = new Deadline(description, parts[1].trim());
                     taskCount++;
                     printAddedTask(tasks[taskCount - 1], taskCount);
+                    saveTasks(tasks, taskCount);
                     break;
                 }
                 case EVENT: {
@@ -128,6 +139,7 @@ public class WhimsyBot {
                     tasks[taskCount] = new Event(description, times[0].trim(), times[1].trim());
                     taskCount++;
                     printAddedTask(tasks[taskCount - 1], taskCount);
+                    saveTasks(tasks, taskCount);
                     break;
                 }
                 }
@@ -186,5 +198,10 @@ public class WhimsyBot {
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + task);
         System.out.println("Now you have " + taskCount + " tasks in the list.");
+    }
+
+    /** Saves the task list without stopping the chatbot if disk storage is unavailable. */
+    private static void saveTasks(Task[] tasks, int taskCount) {
+        new Storage().save(tasks, taskCount);
     }
 }

@@ -63,6 +63,13 @@ foreach ($caseMatch in $caseMatches) {
     $input = Get-SectionBlock $caseText "Input"
     $expected = Normalize-Output (Get-SectionBlock $caseText "Expected output")
 
+    # Each planned session is isolated, while the application itself still persists
+    # tasks normally between real launches.
+    $dataFile = Join-Path (Get-Location) "data\whimsybot.txt"
+    if (Test-Path -LiteralPath $dataFile) {
+        Remove-Item -LiteralPath $dataFile -Force
+    }
+
     # Input is fed via a temp file with shell redirection rather than Process.StandardInput:
     # merely accessing that property makes .NET write a UTF-8 BOM onto the pipe before any
     # content, which corrupts the first line Java reads.
