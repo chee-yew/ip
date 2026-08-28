@@ -1,21 +1,35 @@
 /**
  * Represents a task that must be finished by a specified time.
  */
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Deadline extends Task {
-    private final String by;
+    private static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    private final LocalDate date;
+    private final String legacyBy;
 
     public Deadline(String description, String by) {
         super(description);
-        this.by = by;
+        LocalDate parsedDate;
+        try {
+            parsedDate = LocalDate.parse(by);
+        } catch (DateTimeParseException e) {
+            parsedDate = null;
+        }
+        this.date = parsedDate;
+        this.legacyBy = parsedDate == null ? by : null;
     }
 
     /** Returns the deadline text for persistence. */
     public String getBy() {
-        return by;
+        return date == null ? legacyBy : date.toString();
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        String displayDate = date == null ? legacyBy : date.format(DISPLAY_FORMAT);
+        return "[D]" + super.toString() + " (by: " + displayDate + ")";
     }
 }

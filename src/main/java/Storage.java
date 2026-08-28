@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 
 /** Saves and loads Whimsy Bot tasks using a file relative to the project root. */
-public class gitStorage {
+public class Storage {
     private static final Path FILE_PATH = Paths.get("data", "whimsybot.txt");
 
     /** Writes the current tasks, creating the parent directory when necessary. */
