@@ -51,6 +51,7 @@ public class Storage {
         for (String field : fields) {
             line.append("|").append(encode(field));
         }
+        line.append("|").append(encode(String.join(",", task.getTags())));
         return line.toString();
     }
 
@@ -83,21 +84,28 @@ public class Storage {
             Task task;
             switch (parts[0]) {
             case "T":
-                if (parts.length != 3) return null;
+                if (parts.length != 3 && parts.length != 4) return null;
                 task = new Todo(description);
                 break;
             case "D":
-                if (parts.length != 4) return null;
+                if (parts.length != 4 && parts.length != 5) return null;
                 task = new Deadline(description, decode(parts[3]));
                 break;
             case "E":
-                if (parts.length != 5) return null;
+                if (parts.length != 5 && parts.length != 6) return null;
                 task = new Event(description, decode(parts[3]), decode(parts[4]));
                 break;
             default:
                 return null;
             }
             if (parts[1].equals("1")) task.markAsDone();
+            if ((task instanceof Todo && parts.length == 4)
+                    || (task instanceof Deadline && parts.length == 5)
+                    || (task instanceof Event && parts.length == 6)) {
+                for (String tag : decode(parts[parts.length - 1]).split(",")) {
+                    if (!tag.isBlank()) task.addTag(tag);
+                }
+            }
             return task;
         } catch (IllegalArgumentException e) {
             return null;
