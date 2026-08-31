@@ -15,9 +15,9 @@ public class WhimsyBot {
             String command = ui.readCommand();
             ui.showLine();
 
-            String[] splitCommand = command.split(" ", 2);
-            String commandWord = splitCommand[0];
-            String arguments = splitCommand.length > 1 ? splitCommand[1].trim() : "";
+            String[] parsedCommand = Parser.parse(command);
+            String commandWord = parsedCommand[0];
+            String arguments = parsedCommand[1];
 
             try {
                 switch (CommandType.fromString(commandWord)) {
