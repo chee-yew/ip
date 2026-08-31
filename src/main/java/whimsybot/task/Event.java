@@ -1,12 +1,10 @@
 package whimsybot.task;
 
-/**
- * Represents a task that occurs from one specified time to another.
- */
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/** Represents a task that occurs from one specified time to another. */
 public class Event extends Task {
     private static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
     private final LocalDate fromDate;
@@ -14,6 +12,7 @@ public class Event extends Task {
     private final String legacyFrom;
     private final String legacyTo;
 
+    /** Creates an event task with the supplied description, start, and end text. */
     public Event(String description, String from, String to) {
         super(description);
         this.fromDate = parseDate(from);

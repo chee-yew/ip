@@ -1,5 +1,7 @@
 package whimsybot;
 
+import java.util.List;
+
 import whimsybot.parser.CommandType;
 import whimsybot.parser.Parser;
 import whimsybot.storage.Storage;
@@ -10,12 +12,11 @@ import whimsybot.task.TaskList;
 import whimsybot.task.Todo;
 import whimsybot.ui.Ui;
 
-import java.util.List;
-
 /**
  * Starts the Whimsy Bot chatbot application.
  */
 public class WhimsyBot {
+    /** Starts the Whimsy Bot application and processes commands until exit. */
     public static void main(String[] args) {
         Ui ui = new Ui();
         ui.showWelcome();

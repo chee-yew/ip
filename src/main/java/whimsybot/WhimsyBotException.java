@@ -7,6 +7,7 @@ package whimsybot;
  */
 public class WhimsyBotException extends Exception {
 
+    /** Creates an exception with the supplied user-facing message. */
     public WhimsyBotException(String message) {
         super(message);
     }

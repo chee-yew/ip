@@ -1,18 +1,18 @@
 package whimsybot.storage;
 
-import whimsybot.task.Deadline;
-import whimsybot.task.Event;
-import whimsybot.task.Task;
-import whimsybot.task.Todo;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
+
+import whimsybot.task.Deadline;
+import whimsybot.task.Event;
+import whimsybot.task.Task;
+import whimsybot.task.Todo;
 
 /** Saves and loads Whimsy Bot tasks using a file relative to the project root. */
 public class Storage {
@@ -22,7 +22,7 @@ public class Storage {
     public void save(Task[] tasks, int taskCount) {
         try {
             Files.createDirectories(FILE_PATH.getParent());
-            List<String> lines = new java.util.ArrayList<>();
+            List<String> lines = new ArrayList<>();
             for (int i = 0; i < taskCount; i++) {
                 lines.add(serialize(tasks[i]));
             }
@@ -83,21 +83,29 @@ public class Storage {
             Task task;
             switch (parts[0]) {
             case "T":
-                if (parts.length != 3) return null;
+                if (parts.length != 3) {
+                    return null;
+                }
                 task = new Todo(description);
                 break;
             case "D":
-                if (parts.length != 4) return null;
+                if (parts.length != 4) {
+                    return null;
+                }
                 task = new Deadline(description, decode(parts[3]));
                 break;
             case "E":
-                if (parts.length != 5) return null;
+                if (parts.length != 5) {
+                    return null;
+                }
                 task = new Event(description, decode(parts[3]), decode(parts[4]));
                 break;
             default:
                 return null;
             }
-            if (parts[1].equals("1")) task.markAsDone();
+            if (parts[1].equals("1")) {
+                task.markAsDone();
+            }
             return task;
         } catch (IllegalArgumentException e) {
             return null;
