@@ -1,3 +1,5 @@
+package whimsybot.task;
+
 /**
  * Represents a task that occurs from one specified time to another.
  */

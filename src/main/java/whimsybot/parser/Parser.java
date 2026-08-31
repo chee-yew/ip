@@ -1,3 +1,5 @@
+package whimsybot.parser;
+
 /** Parses the command word and arguments from a line entered by the user. */
 public class Parser {
     private Parser() {

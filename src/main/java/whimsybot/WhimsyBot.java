@@ -1,3 +1,15 @@
+package whimsybot;
+
+import whimsybot.parser.CommandType;
+import whimsybot.parser.Parser;
+import whimsybot.storage.Storage;
+import whimsybot.task.Deadline;
+import whimsybot.task.Event;
+import whimsybot.task.Task;
+import whimsybot.task.TaskList;
+import whimsybot.task.Todo;
+import whimsybot.ui.Ui;
+
 import java.util.List;
 
 /**

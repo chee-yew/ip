@@ -1,3 +1,5 @@
+package whimsybot.task;
+
 /**
  * Represents a task that must be finished by a specified time.
  */

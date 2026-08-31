@@ -1,3 +1,7 @@
+package whimsybot.parser;
+
+import whimsybot.WhimsyBotException;
+
 /**
  * Represents the different commands Whimsy Bot understands.
  */
