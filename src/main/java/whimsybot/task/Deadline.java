@@ -10,7 +10,11 @@ public class Deadline extends Task {
     private final LocalDate date;
     private final String legacyBy;
 
-    /** Creates a deadline task with the supplied description and deadline text. */
+    /** Creates a deadline task with the supplied description and deadline text.
+     *
+     * @param description the task description
+     * @param by the deadline text
+     */
     public Deadline(String description, String by) {
         super(description);
         LocalDate parsedDate;

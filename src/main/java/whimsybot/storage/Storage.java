@@ -18,7 +18,11 @@ import whimsybot.task.Todo;
 public class Storage {
     private static final Path FILE_PATH = Paths.get("data", "whimsybot.txt");
 
-    /** Writes the current tasks, creating the parent directory when necessary. */
+    /** Writes the current tasks, creating the parent directory when necessary.
+     *
+     * @param tasks the array containing the tasks to save
+     * @param taskCount the number of valid tasks in the array
+     */
     public void save(Task[] tasks, int taskCount) {
         try {
             Files.createDirectories(FILE_PATH.getParent());

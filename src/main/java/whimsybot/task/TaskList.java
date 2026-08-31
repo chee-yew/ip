@@ -8,7 +8,10 @@ public class TaskList {
     private final Task[] tasks;
     private int taskCount;
 
-    /** Creates a task list containing the supplied saved tasks, up to its capacity. */
+    /** Creates a task list containing the supplied saved tasks, up to its capacity.
+     *
+     * @param savedTasks tasks loaded from storage
+     */
     public TaskList(List<Task> savedTasks) {
         tasks = new Task[MAX_TASKS];
         taskCount = Math.min(savedTasks.size(), MAX_TASKS);
@@ -27,18 +30,29 @@ public class TaskList {
         return taskCount < MAX_TASKS;
     }
 
-    /** Returns the task at a zero-based index. */
+    /** Returns the task at a zero-based index.
+     *
+     * @param index the zero-based task index
+     * @return the task at the specified index
+     */
     public Task get(int index) {
         return tasks[index];
     }
 
-    /** Adds a task to the end of the list. */
+    /** Adds a task to the end of the list.
+     *
+     * @param task the task to add
+     */
     public void add(Task task) {
         tasks[taskCount] = task;
         taskCount++;
     }
 
-    /** Removes and returns the task at a zero-based index. */
+    /** Removes and returns the task at a zero-based index.
+     *
+     * @param index the zero-based task index
+     * @return the removed task
+     */
     public Task delete(int index) {
         Task removedTask = tasks[index];
         for (int i = index; i < taskCount - 1; i++) {
@@ -49,12 +63,18 @@ public class TaskList {
         return removedTask;
     }
 
-    /** Marks the task at the given zero-based index as done. */
+    /** Marks the task at the given zero-based index as done.
+     *
+     * @param index the zero-based task index
+     */
     public void mark(int index) {
         tasks[index].markAsDone();
     }
 
-    /** Marks the task at the given zero-based index as not done. */
+    /** Marks the task at the given zero-based index as not done.
+     *
+     * @param index the zero-based task index
+     */
     public void unmark(int index) {
         tasks[index].unmarkAsDone();
     }

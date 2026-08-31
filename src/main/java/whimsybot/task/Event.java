@@ -12,7 +12,12 @@ public class Event extends Task {
     private final String legacyFrom;
     private final String legacyTo;
 
-    /** Creates an event task with the supplied description, start, and end text. */
+    /** Creates an event task with the supplied description, start, and end text.
+     *
+     * @param description the task description
+     * @param from the event start text
+     * @param to the event end text
+     */
     public Event(String description, String from, String to) {
         super(description);
         this.fromDate = parseDate(from);

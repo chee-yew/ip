@@ -5,7 +5,10 @@ package whimsybot.task;
  */
 public class Todo extends Task {
 
-    /** Creates a todo task with the supplied description. */
+    /** Creates a todo task with the supplied description.
+     *
+     * @param description the task description
+     */
     public Todo(String description) {
         super(description);
     }

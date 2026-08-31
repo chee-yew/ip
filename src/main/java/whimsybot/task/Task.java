@@ -4,8 +4,8 @@ package whimsybot.task;
  * Represents a task in Whimsy Bot's task list.
  */
 public class Task {
-    protected String description;
-    protected boolean isDone;
+    private final String description;
+    private boolean isDone;
 
     /**
      * Creates an incomplete task with the given description.
