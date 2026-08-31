@@ -1,11 +1,16 @@
 package whimsybot.task;
 
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 /**
  * Represents a task in Whimsy Bot's task list.
  */
 public class Task {
     private final String description;
     private boolean isDone;
+    private final Set<String> tags;
 
     /**
      * Creates an incomplete task with the given description.
@@ -15,6 +20,7 @@ public class Task {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.tags = new LinkedHashSet<>();
     }
 
     /**
@@ -37,6 +43,16 @@ public class Task {
     }
 
     /** Marks this task as complete. */
+
+    /** Adds a tag, preserving the order in which tags were added. */
+    public void addTag(String tag) { tags.add(tag); }
+
+    /** Removes a tag if it is present. */
+    public void removeTag(String tag) { tags.remove(tag); }
+
+    /** Returns this task's tags. */
+    public Set<String> getTags() { return Collections.unmodifiableSet(tags); }
+
     public void markAsDone() {
         isDone = true;
     }
@@ -55,6 +71,7 @@ public class Task {
      */
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + description;
+        String tagText = tags.stream().map(tag -> "[#" + tag + "]").reduce("", String::concat);
+        return "[" + getStatusIcon() + "] " + description + tagText;
     }
 }

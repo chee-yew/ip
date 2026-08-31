@@ -46,6 +46,38 @@ public class WhimsyBot {
                         ui.show((i + 1) + "." + tasks.get(i));
                     }
                     break;
+                case FIND: {
+                    if (arguments.isEmpty()) throw new WhimsyBotException("OOPS!!! Please specify a keyword to find.");
+                    ui.show("Here are the matching tasks in your list:");
+                    int match = 1;
+                    for (int i = 0; i < tasks.size(); i++) {
+                        if (tasks.get(i).getDescription().toLowerCase().contains(arguments.toLowerCase())) {
+                            ui.show(match++ + "." + tasks.get(i));
+                        }
+                    }
+                    break;
+                }
+                case TAG:
+                case UNTAG: {
+                    String[] parts = arguments.split(" ", 2);
+                    if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                        throw new WhimsyBotException("OOPS!!! Please specify a task number and a tag.");
+                    }
+                    int taskNumber = parseTaskNumber(parts[0], commandWord, tasks.size());
+                    String tag = parts[1].trim();
+                    if (tag.startsWith("#")) {
+                        tag = tag.substring(1);
+                    }
+                    if (!tag.matches("[A-Za-z0-9_-]+")) {
+                        throw new WhimsyBotException("OOPS!!! Tags may contain only letters, numbers, underscores, and hyphens.");
+                    }
+                    if (commandWord.equals("tag")) tasks.get(taskNumber - 1).addTag(tag);
+                    else tasks.get(taskNumber - 1).removeTag(tag);
+                    ui.show((commandWord.equals("tag") ? "Added" : "Removed") + " tag #" + tag + ".");
+                    ui.show("  " + tasks.get(taskNumber - 1));
+                    saveTasks(tasks);
+                    break;
+                }
                 case MARK: {
                     int taskNumber = parseTaskNumber(arguments, "mark", tasks.size());
                     tasks.mark(taskNumber - 1);
