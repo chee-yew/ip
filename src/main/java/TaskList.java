@@ -20,6 +20,11 @@ public class TaskList {
         return taskCount;
     }
 
+    /** Returns whether another task can be added to this list. */
+    public boolean canAdd() {
+        return taskCount < MAX_TASKS;
+    }
+
     /** Returns the task at a zero-based index. */
     public Task get(int index) {
         return tasks[index];
@@ -40,6 +45,16 @@ public class TaskList {
         tasks[taskCount - 1] = null;
         taskCount--;
         return removedTask;
+    }
+
+    /** Marks the task at the given zero-based index as done. */
+    public void mark(int index) {
+        tasks[index].markAsDone();
+    }
+
+    /** Marks the task at the given zero-based index as not done. */
+    public void unmark(int index) {
+        tasks[index].unmarkAsDone();
     }
 
     /** Returns the tasks as an array and count pair for storage. */

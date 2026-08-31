@@ -4,7 +4,6 @@ import java.util.List;
  * Starts the Whimsy Bot chatbot application.
  */
 public class WhimsyBot {
-    private static final int MAX_TASKS = 100;
     public static void main(String[] args) {
         Ui ui = new Ui();
         ui.showWelcome();
@@ -33,7 +32,7 @@ public class WhimsyBot {
                     break;
                 case MARK: {
                     int taskNumber = parseTaskNumber(arguments, "mark", tasks.size());
-                    tasks.get(taskNumber - 1).markAsDone();
+                    tasks.mark(taskNumber - 1);
                     ui.show("Nice! I've marked this task as done:");
                     ui.show("  " + tasks.get(taskNumber - 1));
                     saveTasks(tasks);
@@ -41,7 +40,7 @@ public class WhimsyBot {
                 }
                 case UNMARK: {
                     int taskNumber = parseTaskNumber(arguments, "unmark", tasks.size());
-                    tasks.get(taskNumber - 1).unmarkAsDone();
+                    tasks.unmark(taskNumber - 1);
                     ui.show("OK, I've marked this task as not done yet:");
                     ui.show("  " + tasks.get(taskNumber - 1));
                     saveTasks(tasks);
@@ -60,7 +59,7 @@ public class WhimsyBot {
                     if (arguments.isEmpty()) {
                         throw new WhimsyBotException("OOPS!!! The description of a todo cannot be empty.");
                     }
-                    checkListNotFull(tasks.size());
+                    checkListNotFull(tasks);
                     tasks.add(new Todo(arguments));
                     printAddedTask(ui, tasks.get(tasks.size() - 1), tasks.size());
                     saveTasks(tasks);
@@ -79,7 +78,7 @@ public class WhimsyBot {
                                 "OOPS!!! Please specify a deadline, e.g. 'deadline "
                                         + description + " /by Sunday'.");
                     }
-                    checkListNotFull(tasks.size());
+                    checkListNotFull(tasks);
                     tasks.add(new Deadline(description, parts[1].trim()));
                     printAddedTask(ui, tasks.get(tasks.size() - 1), tasks.size());
                     saveTasks(tasks);
@@ -105,7 +104,7 @@ public class WhimsyBot {
                                 "OOPS!!! Please specify the event's start and end, e.g. 'event "
                                         + description + " /from Monday 2pm /to 4pm'.");
                     }
-                    checkListNotFull(tasks.size());
+                    checkListNotFull(tasks);
                     tasks.add(new Event(description, times[0].trim(), times[1].trim()));
                     printAddedTask(ui, tasks.get(tasks.size() - 1), tasks.size());
                     saveTasks(tasks);
@@ -148,11 +147,11 @@ public class WhimsyBot {
     /**
      * Ensures the task list has room for one more task.
      *
-     * @param taskCount the number of tasks currently in the list
+     * @param tasks the task list to check
      * @throws WhimsyBotException if the list is already full
      */
-    private static void checkListNotFull(int taskCount) throws WhimsyBotException {
-        if (taskCount >= MAX_TASKS) {
+    private static void checkListNotFull(TaskList tasks) throws WhimsyBotException {
+        if (!tasks.canAdd()) {
             throw new WhimsyBotException("OOPS!!! Your task list is full, I can't add any more tasks.");
         }
     }
