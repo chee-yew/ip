@@ -1,3 +1,5 @@
+package whimsybot.task;
+
 /**
  * Represents a task in Whimsy Bot's task list.
  */
@@ -22,6 +24,16 @@ public class Task {
      */
     public String getStatusIcon() {
         return isDone ? "X" : " ";
+    }
+
+    /** Returns the task description for persistence and display-related operations. */
+    public String getDescription() {
+        return description;
+    }
+
+    /** Returns whether this task has been marked as complete. */
+    public boolean isDone() {
+        return isDone;
     }
 
     public void markAsDone() {

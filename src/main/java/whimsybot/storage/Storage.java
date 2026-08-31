@@ -1,3 +1,10 @@
+package whimsybot.storage;
+
+import whimsybot.task.Deadline;
+import whimsybot.task.Event;
+import whimsybot.task.Task;
+import whimsybot.task.Todo;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -39,8 +46,8 @@ public class Storage {
             type = "T";
         }
         StringBuilder line = new StringBuilder(type)
-                .append("|").append(task.isDone ? "1" : "0")
-                .append("|").append(encode(task.description));
+                .append("|").append(task.isDone() ? "1" : "0")
+                .append("|").append(encode(task.getDescription()));
         for (String field : fields) {
             line.append("|").append(encode(field));
         }

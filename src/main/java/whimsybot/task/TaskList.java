@@ -1,3 +1,5 @@
+package whimsybot.task;
+
 import java.util.List;
 
 /** Stores and manages the tasks currently known to Whimsy Bot. */

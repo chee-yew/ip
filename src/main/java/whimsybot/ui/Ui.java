@@ -1,3 +1,5 @@
+package whimsybot.ui;
+
 import java.util.Scanner;
 
 /** Handles Whimsy Bot's interaction with the user through the console. */
