@@ -31,8 +31,49 @@ Ensure that Java 25 is used when running the application or build tasks. On macO
 ## Git
 
 Use lightweight tags unless the user requests an annotated tag.
-When proposing or creating a commit message, include enough detail to explain the rationale for the change.
+When proposing or creating a commit message, follow the SE-EDU Git conventions:
+
+https://se-education.org/guides/conventions/git.html
+
+In particular, use the imperative mood, write a concise and specific subject line,
+use a suitable action-oriented prefix where appropriate (such as `Add`, `Fix`,
+`Update`, `Refactor`, `Remove`, or `Document`), and explain the purpose of the
+change when a longer message is needed.
+
+Commit messages should closely follow the guide even when the user does not
+explicitly repeat this requirement in a prompt.
+
 Do not commit or push unless explicitly asked.
+
+## Coding standard
+
+All Java code in this repository must closely follow the SE-EDU Java coding
+standard (basic + intermediate rules):
+
+https://se-education.org/guides/conventions/java/intermediate.html
+
+For topics not covered by the SE-EDU guide, follow the Google Java Style Guide.
+
+Important requirements include:
+
+- Put every class in a package.
+- Use PascalCase for class and enum names, camelCase for methods and variables,
+  and SCREAMING_SNAKE_CASE for constants.
+- Name methods with verbs and name boolean variables and methods with prefixes
+  such as `is`, `has`, `can`, `should`, or `was` where appropriate.
+- Use plural names for collections and English names throughout the codebase.
+- Use four spaces for indentation, K&R-style braces, and consistent whitespace.
+- Keep lines within 120 characters where reasonably possible, wrapping long
+  lines to preserve readability.
+- Keep imports consistently ordered.
+- Separate logical units within a block with blank lines where appropriate.
+- Use the prescribed three-part naming format for test methods when applicable:
+  `featureUnderTest_testScenario_expectedBehavior()`.
+- Add Javadoc to classes and to non-trivial methods and fields when their
+  purpose or behavior is not obvious.
+
+These coding-standard requirements apply to all new and modified Java code,
+including tests, unless the user explicitly requests an exception.
 
 ## UI testing workflow
 
