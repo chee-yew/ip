@@ -5,18 +5,12 @@ import java.util.List;
  */
 public class WhimsyBot {
     private static final int MAX_TASKS = 100;
-
     public static void main(String[] args) {
         Ui ui = new Ui();
         ui.showWelcome();
 
-        Task[] tasks = new Task[MAX_TASKS];
         Storage storage = new Storage();
-        List<Task> savedTasks = storage.load();
-        int taskCount = Math.min(savedTasks.size(), MAX_TASKS);
-        for (int i = 0; i < taskCount; i++) {
-            tasks[i] = savedTasks.get(i);
-        }
+        TaskList tasks = new TaskList(storage.load());
         while (ui.hasNextCommand()) {
             String command = ui.readCommand();
             ui.showLine();
@@ -33,49 +27,43 @@ public class WhimsyBot {
                     return;
                 case LIST:
                     ui.show("Here are the tasks in your list:");
-                    for (int i = 0; i < taskCount; i++) {
-                        ui.show((i + 1) + "." + tasks[i]);
+                    for (int i = 0; i < tasks.size(); i++) {
+                        ui.show((i + 1) + "." + tasks.get(i));
                     }
                     break;
                 case MARK: {
-                    int taskNumber = parseTaskNumber(arguments, "mark", taskCount);
-                    tasks[taskNumber - 1].markAsDone();
+                    int taskNumber = parseTaskNumber(arguments, "mark", tasks.size());
+                    tasks.get(taskNumber - 1).markAsDone();
                     ui.show("Nice! I've marked this task as done:");
-                    ui.show("  " + tasks[taskNumber - 1]);
-                    saveTasks(tasks, taskCount);
+                    ui.show("  " + tasks.get(taskNumber - 1));
+                    saveTasks(tasks);
                     break;
                 }
                 case UNMARK: {
-                    int taskNumber = parseTaskNumber(arguments, "unmark", taskCount);
-                    tasks[taskNumber - 1].unmarkAsDone();
+                    int taskNumber = parseTaskNumber(arguments, "unmark", tasks.size());
+                    tasks.get(taskNumber - 1).unmarkAsDone();
                     ui.show("OK, I've marked this task as not done yet:");
-                    ui.show("  " + tasks[taskNumber - 1]);
-                    saveTasks(tasks, taskCount);
+                    ui.show("  " + tasks.get(taskNumber - 1));
+                    saveTasks(tasks);
                     break;
                 }
                 case DELETE: {
-                    int taskNumber = parseTaskNumber(arguments, "delete", taskCount);
-                    Task removedTask = tasks[taskNumber - 1];
-                    for (int i = taskNumber - 1; i < taskCount - 1; i++) {
-                        tasks[i] = tasks[i + 1];
-                    }
-                    tasks[taskCount - 1] = null;
-                    taskCount--;
+                    int taskNumber = parseTaskNumber(arguments, "delete", tasks.size());
+                    Task removedTask = tasks.delete(taskNumber - 1);
                     ui.show("Noted. I've removed this task:");
                     ui.show("  " + removedTask);
-                    ui.show("Now you have " + taskCount + " tasks in the list.");
-                    saveTasks(tasks, taskCount);
+                    ui.show("Now you have " + tasks.size() + " tasks in the list.");
+                    saveTasks(tasks);
                     break;
                 }
                 case TODO:
                     if (arguments.isEmpty()) {
                         throw new WhimsyBotException("OOPS!!! The description of a todo cannot be empty.");
                     }
-                    checkListNotFull(taskCount);
-                    tasks[taskCount] = new Todo(arguments);
-                    taskCount++;
-                    printAddedTask(ui, tasks[taskCount - 1], taskCount);
-                    saveTasks(tasks, taskCount);
+                    checkListNotFull(tasks.size());
+                    tasks.add(new Todo(arguments));
+                    printAddedTask(ui, tasks.get(tasks.size() - 1), tasks.size());
+                    saveTasks(tasks);
                     break;
                 case DEADLINE: {
                     if (arguments.isEmpty()) {
@@ -91,11 +79,10 @@ public class WhimsyBot {
                                 "OOPS!!! Please specify a deadline, e.g. 'deadline "
                                         + description + " /by Sunday'.");
                     }
-                    checkListNotFull(taskCount);
-                    tasks[taskCount] = new Deadline(description, parts[1].trim());
-                    taskCount++;
-                    printAddedTask(ui, tasks[taskCount - 1], taskCount);
-                    saveTasks(tasks, taskCount);
+                    checkListNotFull(tasks.size());
+                    tasks.add(new Deadline(description, parts[1].trim()));
+                    printAddedTask(ui, tasks.get(tasks.size() - 1), tasks.size());
+                    saveTasks(tasks);
                     break;
                 }
                 case EVENT: {
@@ -118,11 +105,10 @@ public class WhimsyBot {
                                 "OOPS!!! Please specify the event's start and end, e.g. 'event "
                                         + description + " /from Monday 2pm /to 4pm'.");
                     }
-                    checkListNotFull(taskCount);
-                    tasks[taskCount] = new Event(description, times[0].trim(), times[1].trim());
-                    taskCount++;
-                    printAddedTask(ui, tasks[taskCount - 1], taskCount);
-                    saveTasks(tasks, taskCount);
+                    checkListNotFull(tasks.size());
+                    tasks.add(new Event(description, times[0].trim(), times[1].trim()));
+                    printAddedTask(ui, tasks.get(tasks.size() - 1), tasks.size());
+                    saveTasks(tasks);
                     break;
                 }
                 }
@@ -184,7 +170,7 @@ public class WhimsyBot {
     }
 
     /** Saves the task list without stopping the chatbot if disk storage is unavailable. */
-    private static void saveTasks(Task[] tasks, int taskCount) {
-        new Storage().save(tasks, taskCount);
+    private static void saveTasks(TaskList tasks) {
+        new Storage().save(tasks.toArray(), tasks.size());
     }
 }
