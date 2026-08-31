@@ -36,6 +36,7 @@ public class Task {
         return isDone;
     }
 
+    /** Marks this task as complete. */
     public void markAsDone() {
         isDone = true;
     }
