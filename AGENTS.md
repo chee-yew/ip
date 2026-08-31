@@ -75,6 +75,20 @@ Important requirements include:
 These coding-standard requirements apply to all new and modified Java code,
 including tests, unless the user explicitly requests an exception.
 
+The reusable project skill at `.codex/skills/seedu-java-coding-standard` contains
+the operational checklist for applying this standard. Use it for every Java
+code change.
+
+## Git commit standard
+
+All future commits must follow the SE-EDU Git conventions:
+
+https://se-education.org/guides/conventions/git.html
+
+The reusable project skill at `.codex/skills/seedu-git-standard` contains the
+operational checklist for proposing and writing commit messages. Use it for
+every commit, and keep unrelated changes in separate commits.
+
 ## UI testing workflow
 
 After any code change that affects the program's console behavior (a command, prompt, message, or output format), before treating the change as done:

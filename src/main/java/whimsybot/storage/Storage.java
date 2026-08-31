@@ -18,11 +18,15 @@ import whimsybot.task.Todo;
 public class Storage {
     private static final Path FILE_PATH = Paths.get("data", "whimsybot.txt");
 
-    /** Writes the current tasks, creating the parent directory when necessary. */
+    /** Writes the current tasks, creating the parent directory when necessary.
+     *
+     * @param tasks the array containing the tasks to save
+     * @param taskCount the number of valid tasks in the array
+     */
     public void save(Task[] tasks, int taskCount) {
         try {
             Files.createDirectories(FILE_PATH.getParent());
-            List<String> lines = new java.util.ArrayList<>();
+            List<String> lines = new ArrayList<>();
             for (int i = 0; i < taskCount; i++) {
                 lines.add(serialize(tasks[i]));
             }
@@ -83,21 +87,29 @@ public class Storage {
             Task task;
             switch (parts[0]) {
             case "T":
-                if (parts.length != 3) return null;
+                if (parts.length != 3) {
+                    return null;
+                }
                 task = new Todo(description);
                 break;
             case "D":
-                if (parts.length != 4) return null;
+                if (parts.length != 4) {
+                    return null;
+                }
                 task = new Deadline(description, decode(parts[3]));
                 break;
             case "E":
-                if (parts.length != 5) return null;
+                if (parts.length != 5) {
+                    return null;
+                }
                 task = new Event(description, decode(parts[3]), decode(parts[4]));
                 break;
             default:
                 return null;
             }
-            if (parts[1].equals("1")) task.markAsDone();
+            if (parts[1].equals("1")) {
+                task.markAsDone();
+            }
             return task;
         } catch (IllegalArgumentException e) {
             return null;
