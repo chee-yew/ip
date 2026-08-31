@@ -4,7 +4,6 @@ import java.util.List;
  * Starts the Whimsy Bot chatbot application.
  */
 public class WhimsyBot {
-    private static final String SEPARATOR = "____________________________________________________________";
     private static final int MAX_TASKS = 100;
 
     public static void main(String[] args) {
@@ -29,28 +28,28 @@ public class WhimsyBot {
             try {
                 switch (CommandType.fromString(commandWord)) {
                 case BYE:
-                    System.out.println("Bye. Hope to see you again soon!");
-                    System.out.println(SEPARATOR);
+                    ui.show("Bye. Hope to see you again soon!");
+                    ui.showLine();
                     return;
                 case LIST:
-                    System.out.println("Here are the tasks in your list:");
+                    ui.show("Here are the tasks in your list:");
                     for (int i = 0; i < taskCount; i++) {
-                        System.out.println((i + 1) + "." + tasks[i]);
+                        ui.show((i + 1) + "." + tasks[i]);
                     }
                     break;
                 case MARK: {
                     int taskNumber = parseTaskNumber(arguments, "mark", taskCount);
                     tasks[taskNumber - 1].markAsDone();
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("  " + tasks[taskNumber - 1]);
+                    ui.show("Nice! I've marked this task as done:");
+                    ui.show("  " + tasks[taskNumber - 1]);
                     saveTasks(tasks, taskCount);
                     break;
                 }
                 case UNMARK: {
                     int taskNumber = parseTaskNumber(arguments, "unmark", taskCount);
                     tasks[taskNumber - 1].unmarkAsDone();
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println("  " + tasks[taskNumber - 1]);
+                    ui.show("OK, I've marked this task as not done yet:");
+                    ui.show("  " + tasks[taskNumber - 1]);
                     saveTasks(tasks, taskCount);
                     break;
                 }
@@ -62,9 +61,9 @@ public class WhimsyBot {
                     }
                     tasks[taskCount - 1] = null;
                     taskCount--;
-                    System.out.println("Noted. I've removed this task:");
-                    System.out.println("  " + removedTask);
-                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                    ui.show("Noted. I've removed this task:");
+                    ui.show("  " + removedTask);
+                    ui.show("Now you have " + taskCount + " tasks in the list.");
                     saveTasks(tasks, taskCount);
                     break;
                 }
@@ -75,7 +74,7 @@ public class WhimsyBot {
                     checkListNotFull(taskCount);
                     tasks[taskCount] = new Todo(arguments);
                     taskCount++;
-                    printAddedTask(tasks[taskCount - 1], taskCount);
+                    printAddedTask(ui, tasks[taskCount - 1], taskCount);
                     saveTasks(tasks, taskCount);
                     break;
                 case DEADLINE: {
@@ -95,7 +94,7 @@ public class WhimsyBot {
                     checkListNotFull(taskCount);
                     tasks[taskCount] = new Deadline(description, parts[1].trim());
                     taskCount++;
-                    printAddedTask(tasks[taskCount - 1], taskCount);
+                    printAddedTask(ui, tasks[taskCount - 1], taskCount);
                     saveTasks(tasks, taskCount);
                     break;
                 }
@@ -122,15 +121,15 @@ public class WhimsyBot {
                     checkListNotFull(taskCount);
                     tasks[taskCount] = new Event(description, times[0].trim(), times[1].trim());
                     taskCount++;
-                    printAddedTask(tasks[taskCount - 1], taskCount);
+                    printAddedTask(ui, tasks[taskCount - 1], taskCount);
                     saveTasks(tasks, taskCount);
                     break;
                 }
                 }
             } catch (WhimsyBotException e) {
-                System.out.println(e.getMessage());
+                ui.show(e.getMessage());
             }
-            System.out.println(SEPARATOR);
+            ui.showLine();
         }
     }
 
@@ -178,10 +177,10 @@ public class WhimsyBot {
      * @param task the task that was added
      * @param taskCount the number of tasks now in the list
      */
-    private static void printAddedTask(Task task, int taskCount) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + task);
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
+    private static void printAddedTask(Ui ui, Task task, int taskCount) {
+        ui.show("Got it. I've added this task:");
+        ui.show("  " + task);
+        ui.show("Now you have " + taskCount + " tasks in the list.");
     }
 
     /** Saves the task list without stopping the chatbot if disk storage is unavailable. */
