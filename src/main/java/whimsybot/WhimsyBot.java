@@ -10,8 +10,6 @@ import whimsybot.task.TaskList;
 import whimsybot.task.Todo;
 import whimsybot.ui.Ui;
 
-import java.util.List;
-
 /**
  * Starts the Whimsy Bot chatbot application.
  */

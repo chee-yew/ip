@@ -1,18 +1,18 @@
 package whimsybot.storage;
 
-import whimsybot.task.Deadline;
-import whimsybot.task.Event;
-import whimsybot.task.Task;
-import whimsybot.task.Todo;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
+
+import whimsybot.task.Deadline;
+import whimsybot.task.Event;
+import whimsybot.task.Task;
+import whimsybot.task.Todo;
 
 /** Saves and loads Whimsy Bot tasks using a file relative to the project root. */
 public class Storage {
