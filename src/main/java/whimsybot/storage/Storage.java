@@ -117,8 +117,10 @@ public class Storage {
                     || (task instanceof Deadline && parts.length == 5)
                     || (task instanceof Event && parts.length == 6)) {
                 for (String tag : decode(parts[parts.length - 1]).split(",")) {
-                    if (!tag.isBlank()) task.addTag(tag);
-            }
+                    if (!tag.isBlank()) {
+                        task.addTag(tag);
+                    }
+                }
             }
             return task;
         } catch (IllegalArgumentException e) {
