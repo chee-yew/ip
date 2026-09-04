@@ -1,7 +1,5 @@
 package whimsybot;
 
-import java.util.List;
-
 import whimsybot.parser.CommandType;
 import whimsybot.parser.Parser;
 import whimsybot.storage.Storage;
@@ -47,7 +45,9 @@ public class WhimsyBot {
                     }
                     break;
                 case FIND: {
-                    if (arguments.isEmpty()) throw new WhimsyBotException("OOPS!!! Please specify a keyword to find.");
+                    if (arguments.isEmpty()) {
+                        throw new WhimsyBotException("OOPS!!! Please specify a keyword to find.");
+                    }
                     ui.show("Here are the matching tasks in your list:");
                     int match = 1;
                     for (int i = 0; i < tasks.size(); i++) {
@@ -69,10 +69,14 @@ public class WhimsyBot {
                         tag = tag.substring(1);
                     }
                     if (!tag.matches("[A-Za-z0-9_-]+")) {
-                        throw new WhimsyBotException("OOPS!!! Tags may contain only letters, numbers, underscores, and hyphens.");
+                        throw new WhimsyBotException(
+                                "OOPS!!! Tags may contain only letters, numbers, underscores, and hyphens.");
                     }
-                    if (commandWord.equals("tag")) tasks.get(taskNumber - 1).addTag(tag);
-                    else tasks.get(taskNumber - 1).removeTag(tag);
+                    if (commandWord.equals("tag")) {
+                        tasks.get(taskNumber - 1).addTag(tag);
+                    } else {
+                        tasks.get(taskNumber - 1).removeTag(tag);
+                    }
                     ui.show((commandWord.equals("tag") ? "Added" : "Removed") + " tag #" + tag + ".");
                     ui.show("  " + tasks.get(taskNumber - 1));
                     saveTasks(tasks);
@@ -158,6 +162,8 @@ public class WhimsyBot {
                     saveTasks(tasks);
                     break;
                 }
+                default:
+                    break;
                 }
             } catch (WhimsyBotException e) {
                 ui.show(e.getMessage());
