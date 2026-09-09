@@ -21,8 +21,7 @@ public class Ui {
                 + "|  _ \\ / _ \\| __|\n"
                 + "| |_) | (_) | |_ \n"
                 + "|____/ \\___/ \\__|\n");
-        show("Hello! I'm Whimsy Bot.");
-        show("What can I do for you today?");
+        show("Hello! I'm Whimsy Bot.", "What can I do for you today?");
         showLine();
     }
 
@@ -41,8 +40,13 @@ public class Ui {
         System.out.println(SEPARATOR);
     }
 
-    /** Displays a message. */
-    public void show(String message) {
-        System.out.println(message);
+    /** Displays one or more messages, each on its own line.
+     *
+     * @param messages the messages to display
+     */
+    public void show(String... messages) {
+        for (String message : messages) {
+            System.out.println(message);
+        }
     }
 }

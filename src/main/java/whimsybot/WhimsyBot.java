@@ -69,7 +69,7 @@ public class WhimsyBot {
     }
 
     /** Runs the original console version of Whimsy Bot. */
-    public static void main(String[] args) {
+    public static void main(String... args) {
         Ui ui = new Ui();
         ui.showWelcome();
 
