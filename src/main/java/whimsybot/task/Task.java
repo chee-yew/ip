@@ -44,11 +44,25 @@ public class Task {
 
     /** Marks this task as complete. */
 
-    /** Adds a tag, preserving the order in which tags were added. */
-    public void addTag(String tag) { tags.add(tag); }
+    /** Adds one or more tags, preserving the order in which tags were added.
+     *
+     * @param tagsToAdd the tags to add
+     */
+    public void addTag(String... tagsToAdd) {
+        for (String tag : tagsToAdd) {
+            tags.add(tag);
+        }
+    }
 
-    /** Removes a tag if it is present. */
-    public void removeTag(String tag) { tags.remove(tag); }
+    /** Removes one or more tags if they are present.
+     *
+     * @param tagsToRemove the tags to remove
+     */
+    public void removeTag(String... tagsToRemove) {
+        for (String tag : tagsToRemove) {
+            tags.remove(tag);
+        }
+    }
 
     /** Returns this task's tags. */
     public Set<String> getTags() { return Collections.unmodifiableSet(tags); }
