@@ -24,10 +24,15 @@ public class Storage {
      * @param taskCount the number of valid tasks in the array
      */
     public void save(Task[] tasks, int taskCount) {
+        // TaskList supplies a compact prefix whose count cannot exceed the backing array.
+        assert tasks != null : "Tasks array must not be null";
+        assert taskCount >= 0 && taskCount <= tasks.length : "Task count must fit in the tasks array";
         try {
             Files.createDirectories(FILE_PATH.getParent());
             List<String> lines = new ArrayList<>();
             for (int i = 0; i < taskCount; i++) {
+                // Every element in the valid prefix is expected to be a real task.
+                assert tasks[i] != null : "A saved task entry must not be null";
                 lines.add(serialize(tasks[i]));
             }
             Files.write(FILE_PATH, lines, StandardCharsets.UTF_8);
@@ -37,6 +42,8 @@ public class Storage {
     }
 
     private static String serialize(Task task) {
+        // Serialization is only meaningful for an existing task object.
+        assert task != null : "Cannot serialize a null task";
         String type;
         List<String> fields = new ArrayList<>();
         if (task instanceof Deadline deadline) {
