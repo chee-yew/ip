@@ -26,6 +26,8 @@ public class Deadline extends Task {
         }
         this.date = parsedDate;
         this.legacyBy = parsedDate == null ? by : null;
+        // A deadline uses exactly one representation: a parsed date or legacy text.
+        assert (date == null) != (legacyBy == null) : "Deadline date representation is inconsistent";
     }
 
     /** Returns the deadline text for persistence. */
