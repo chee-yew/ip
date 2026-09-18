@@ -1,5 +1,8 @@
 package whimsybot;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import whimsybot.parser.CommandType;
 import whimsybot.parser.Parser;
 import whimsybot.storage.Storage;
@@ -86,11 +89,9 @@ public class WhimsyBot {
     }
 
     private String getTaskListResponse() {
-        StringBuilder response = new StringBuilder("Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            response.append(System.lineSeparator()).append(i + 1).append('.').append(tasks.get(i));
-        }
-        return response.toString();
+        return IntStream.range(0, tasks.size())
+                .mapToObj(index -> System.lineSeparator() + (index + 1) + "." + tasks.get(index))
+                .collect(Collectors.joining("", "Here are the tasks in your list:", ""));
     }
 
     private String getFindResponse(String keyword) throws WhimsyBotException {
