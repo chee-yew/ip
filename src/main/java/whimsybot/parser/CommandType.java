@@ -6,7 +6,7 @@ import whimsybot.WhimsyBotException;
  * Represents the different commands Whimsy Bot understands.
  */
 public enum CommandType {
-    LIST, MARK, UNMARK, DELETE, TODO, DEADLINE, EVENT, TAG, UNTAG, FIND, BYE;
+    LIST, MARK, UNMARK, DELETE, TODO, DEADLINE, EVENT, TAG, UNTAG, FIND, HELP, BYE;
 
     /**
      * Parses the first word of a line of user input into a {@code CommandType}.
@@ -37,6 +37,8 @@ public enum CommandType {
             return UNTAG;
         case "find":
             return FIND;
+        case "help":
+            return HELP;
         case "bye":
             return BYE;
         default:
