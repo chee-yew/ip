@@ -25,6 +25,9 @@ public class Event extends Task {
         this.toDate = parseDate(to);
         this.legacyFrom = fromDate == null ? from : null;
         this.legacyTo = toDate == null ? to : null;
+        // Each endpoint uses exactly one representation: a parsed date or legacy text.
+        assert (fromDate == null) != (legacyFrom == null) : "Event start representation is inconsistent";
+        assert (toDate == null) != (legacyTo == null) : "Event end representation is inconsistent";
     }
 
     /** Returns the event start text for persistence. */
