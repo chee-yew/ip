@@ -95,10 +95,8 @@ public class Storage {
             Task task;
             switch (parts[0]) {
             case "T":
-                if (parts.length != 3) {
-                    if (parts.length != 4) {
-                        return null;
-                    }
+                if (parts.length != 3 && parts.length != 4) {
+                    return null;
                 }
                 task = new Todo(description);
                 break;

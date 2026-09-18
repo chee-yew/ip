@@ -42,8 +42,6 @@ public class Task {
         return isDone;
     }
 
-    /** Marks this task as complete. */
-
     /** Adds one or more tags, preserving the order in which tags were added.
      *
      * @param tagsToAdd the tags to add
@@ -65,8 +63,11 @@ public class Task {
     }
 
     /** Returns this task's tags. */
-    public Set<String> getTags() { return Collections.unmodifiableSet(tags); }
+    public Set<String> getTags() {
+        return Collections.unmodifiableSet(tags);
+    }
 
+    /** Marks this task as complete. */
     public void markAsDone() {
         isDone = true;
     }
