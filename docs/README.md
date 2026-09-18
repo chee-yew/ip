@@ -1,30 +1,24 @@
 # Whimsy Bot User Guide
 
-// Update the title above to match the actual product name
-
 // Product screenshot goes here
 
 // Product intro goes here
 
+## Getting help
+
+Use the `help` command at any time to display an in-app help page with the
+available commands and their expected arguments.
+
+Example:
+
+```text
+help
+```
+
+The help page lists commands for adding, viewing, searching, updating, and
+deleting tasks, as well as the command for exiting Whimsy Bot.
+
 ## Adding deadlines
 
-// Describe the action and its outcome.
-
-// Give examples of usage
-
-Example: `keyword (optional arguments)`
-
-// A description of the expected outcome goes here
-
-```
-expected output
-```
-
-## Feature ABC
-
-// Feature details
-
-
-## Feature XYZ
-
-// Feature details
+Use `deadline DESCRIPTION /by DATE` to add a task that must be completed by a
+specified date or time.

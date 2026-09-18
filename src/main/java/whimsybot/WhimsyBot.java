@@ -48,6 +48,8 @@ public class WhimsyBot {
                 return getTaskListResponse();
             case FIND:
                 return getFindResponse(arguments);
+            case HELP:
+                return getHelpResponse();
             case TAG:
             case UNTAG:
                 return processTagCommand(commandWord, arguments);
@@ -106,6 +108,24 @@ public class WhimsyBot {
             }
         }
         return response.toString();
+    }
+
+    /** Returns concise in-app guidance for the commands supported by Whimsy Bot. */
+    private String getHelpResponse() {
+        return String.join(System.lineSeparator(),
+                "Here is how to use Whimsy Bot:",
+                "  todo DESCRIPTION - add a task without a date",
+                "  deadline DESCRIPTION /by DATE - add a task with a deadline",
+                "  event DESCRIPTION /from START /to END - add an event",
+                "  list - show all tasks",
+                "  find KEYWORD - find tasks containing a keyword",
+                "  mark NUMBER - mark a task as done",
+                "  unmark NUMBER - mark a task as not done",
+                "  tag NUMBER TAG - add a tag to a task",
+                "  untag NUMBER TAG - remove a tag from a task",
+                "  delete NUMBER - remove a task",
+                "  help - show this help page",
+                "  bye - exit Whimsy Bot");
     }
 
     private String processTagCommand(String commandWord, String arguments) throws WhimsyBotException {

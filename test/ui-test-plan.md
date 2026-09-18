@@ -18,16 +18,16 @@ bye
 
 ```text
 ____________________________________________________________
- _       ___     _                         
-| |     / / |__ (_)_ __ ___  ___ _   _     
-| | /| / /| '_ \| | '_ ` _ \/ __| | | |    
-| |/ |/ / | | | | | | | | | \__ \ |_| |    
-|__/|__/  |_| |_|_|_| |_| |_|___/\__, |    
-                                  |___/     
- ____        _   
+ _       ___     _
+| |     / / |__ (_)_ __ ___  ___ _   _
+| | /| / /| '_ \| | '_ ` _ \/ __| | | |
+| |/ |/ / | | | | | | | | | \__ \ |_| |
+|__/|__/  |_| |_|_|_| |_| |_|___/\__, |
+                                  |___/
+ ____        _
 | __ )  ___ | |_ 
 |  _ \ / _ \| __|
-| |_) | (_) | |_ 
+| |_) | (_) | |_
 |____/ \___/ \__|
 
 Hello! I'm Whimsy Bot.
@@ -41,6 +41,56 @@ ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][ ] read book
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## Test Case: display the help page
+
+**Aim:** Verify that the `help` command displays guidance for the available commands and that the session remains usable afterwards.
+
+### Input
+
+```text
+help
+bye
+```
+
+### Expected output
+
+```text
+____________________________________________________________
+ _       ___     _                         
+| |     / / |__ (_)_ __ ___  ___ _   _     
+| | /| / /| '_ \| | '_ ` _ \/ __| | | |    
+| |/ |/ / | | | | | | | | | \__ \ |_| |    
+|__/|__/  |_| |_|_|_| |_| |_|___/\__, |    
+                                  |___/     
+ ____        _   
+| __ )  ___ | |_ 
+|  _ \ / _ \| __|
+| |_) | (_) | |_ 
+|____/ \___/|__|
+
+Hello! I'm Whimsy Bot.
+What can I do for you today?
+____________________________________________________________
+____________________________________________________________
+Here is how to use Whimsy Bot:
+  todo DESCRIPTION - add a task without a date
+  deadline DESCRIPTION /by DATE - add a task with a deadline
+  event DESCRIPTION /from START /to END - add an event
+  list - show all tasks
+  find KEYWORD - find tasks containing a keyword
+  mark NUMBER - mark a task as done
+  unmark NUMBER - mark a task as not done
+  tag NUMBER TAG - add a tag to a task
+  untag NUMBER TAG - remove a tag from a task
+  delete NUMBER - remove a task
+  help - show this help page
+  bye - exit Whimsy Bot
 ____________________________________________________________
 ____________________________________________________________
 Bye. Hope to see you again soon!

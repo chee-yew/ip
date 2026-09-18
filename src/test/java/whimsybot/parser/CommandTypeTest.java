@@ -13,6 +13,7 @@ class CommandTypeTest {
     void fromString_knownCommand_returnsMatchingType() throws WhimsyBotException {
         assertEquals(CommandType.LIST, CommandType.fromString("list"));
         assertEquals(CommandType.EVENT, CommandType.fromString("event"));
+        assertEquals(CommandType.HELP, CommandType.fromString("help"));
         assertEquals(CommandType.BYE, CommandType.fromString("bye"));
     }
 
