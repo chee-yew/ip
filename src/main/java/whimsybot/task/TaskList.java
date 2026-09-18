@@ -13,10 +13,14 @@ public class TaskList {
      * @param savedTasks tasks loaded from storage
      */
     public TaskList(List<Task> savedTasks) {
+        // Storage is expected to provide a non-null collection of tasks.
+        assert savedTasks != null : "Saved tasks must not be null";
         tasks = new Task[MAX_TASKS];
         taskCount = Math.min(savedTasks.size(), MAX_TASKS);
         for (int i = 0; i < taskCount; i++) {
             tasks[i] = savedTasks.get(i);
+            // Every occupied slot must contain a task so later operations can use it safely.
+            assert tasks[i] != null : "An occupied task slot must not be null";
         }
     }
 
@@ -36,6 +40,8 @@ public class TaskList {
      * @return the task at the specified index
      */
     public Task get(int index) {
+        // Callers validate task numbers before converting them to zero-based indices.
+        assert isValidIndex(index) : "Task index must refer to an existing task";
         return tasks[index];
     }
 
@@ -44,6 +50,9 @@ public class TaskList {
      * @param task the task to add
      */
     public void add(Task task) {
+        // The command layer checks capacity before adding, so the next slot must exist.
+        assert canAdd() : "A task cannot be added to a full task list";
+        assert task != null : "A task list must not contain null tasks";
         tasks[taskCount] = task;
         taskCount++;
     }
@@ -54,6 +63,8 @@ public class TaskList {
      * @return the removed task
      */
     public Task delete(int index) {
+        // Deletion is only requested after the command layer validates the task number.
+        assert isValidIndex(index) : "Task index must refer to an existing task";
         Task removedTask = tasks[index];
         for (int i = index; i < taskCount - 1; i++) {
             tasks[i] = tasks[i + 1];
@@ -68,6 +79,8 @@ public class TaskList {
      * @param index the zero-based task index
      */
     public void mark(int index) {
+        // A valid index implies that the referenced slot is occupied.
+        assert isValidIndex(index) : "Task index must refer to an existing task";
         tasks[index].markAsDone();
     }
 
@@ -76,11 +89,17 @@ public class TaskList {
      * @param index the zero-based task index
      */
     public void unmark(int index) {
+        // A valid index implies that the referenced slot is occupied.
+        assert isValidIndex(index) : "Task index must refer to an existing task";
         tasks[index].unmarkAsDone();
     }
 
     /** Returns the tasks as an array and count pair for storage. */
     public Task[] toArray() {
         return tasks;
+    }
+
+    private boolean isValidIndex(int index) {
+        return index >= 0 && index < taskCount && tasks[index] != null;
     }
 }
