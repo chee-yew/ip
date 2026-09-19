@@ -231,13 +231,17 @@ ____________________________________________________________
 
 ```text
 blah
+list now
 todo
 deadline return book
 event project meeting
+deadline invalid date /by 2026-02-30
+event backwards /from 2026-09-21 /to 2026-09-20
 mark 5
 mark abc
 delete 5
 delete abc
+todo read book
 todo read book
 list
 bye
@@ -266,6 +270,9 @@ ____________________________________________________________
 OOPS!!! I'm sorry, but I don't know what that means :-(
 ____________________________________________________________
 ____________________________________________________________
+OOPS!!! The list command does not accept any arguments.
+____________________________________________________________
+____________________________________________________________
 OOPS!!! The description of a todo cannot be empty.
 ____________________________________________________________
 ____________________________________________________________
@@ -273,6 +280,12 @@ OOPS!!! Please specify a deadline, e.g. 'deadline return book /by Sunday'.
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! Please specify the event's start and end, e.g. 'event project meeting /from Monday 2pm /to 4pm'.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! The deadline must be a valid date, such as 2026-09-20.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! An event's start date must be before its end date.
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! There is no task number 5 in your list.
@@ -290,6 +303,9 @@ ____________________________________________________________
 Got it. I've added this task:
   [T][ ] read book
 Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+OOPS!!! This task is already in your list. Please add a different task.
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:

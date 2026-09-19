@@ -2,6 +2,7 @@ package whimsybot;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -9,6 +10,7 @@ import java.util.stream.IntStream;
 import whimsybot.parser.CommandType;
 import whimsybot.parser.Parser;
 import whimsybot.storage.Storage;
+import whimsybot.storage.StorageException;
 import whimsybot.task.Deadline;
 import whimsybot.task.Event;
 import whimsybot.task.Task;
@@ -27,11 +29,19 @@ public class WhimsyBot {
     private static final Pattern ISO_DATE_PATTERN = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
     private final TaskList tasks;
     private final Storage storage;
+    private String startupWarning;
 
     /** Creates a chatbot and loads its saved tasks. */
     public WhimsyBot() {
         storage = new Storage();
-        tasks = new TaskList(storage.load());
+        List<Task> savedTasks;
+        try {
+            savedTasks = storage.load();
+        } catch (StorageException e) {
+            savedTasks = List.of();
+            startupWarning = e.getMessage();
+        }
+        tasks = new TaskList(savedTasks);
     }
 
     /** Processes one command and returns the response to display.
@@ -48,36 +58,45 @@ public class WhimsyBot {
             switch (CommandType.fromString(commandWord)) {
             case BYE:
                 validateNoArguments(commandWord, arguments);
-                return "Bye. Hope to see you again soon!";
+                return includeStartupWarning("Bye. Hope to see you again soon!");
             case LIST:
                 validateNoArguments(commandWord, arguments);
-                return getTaskListResponse();
+                return includeStartupWarning(getTaskListResponse());
             case FIND:
-                return getFindResponse(arguments);
+                return includeStartupWarning(getFindResponse(arguments));
             case HELP:
                 validateNoArguments(commandWord, arguments);
-                return getHelpResponse();
+                return includeStartupWarning(getHelpResponse());
             case TAG:
             case UNTAG:
-                return processTagCommand(commandWord, arguments);
+                return includeStartupWarning(processTagCommand(commandWord, arguments));
             case MARK:
-                return processMarkCommand(arguments, true);
+                return includeStartupWarning(processMarkCommand(arguments, true));
             case UNMARK:
-                return processMarkCommand(arguments, false);
+                return includeStartupWarning(processMarkCommand(arguments, false));
             case DELETE:
-                return processDeleteCommand(arguments);
+                return includeStartupWarning(processDeleteCommand(arguments));
             case TODO:
-                return processTodoCommand(arguments);
+                return includeStartupWarning(processTodoCommand(arguments));
             case DEADLINE:
-                return processDeadlineCommand(arguments);
+                return includeStartupWarning(processDeadlineCommand(arguments));
             case EVENT:
-                return processEventCommand(arguments);
+                return includeStartupWarning(processEventCommand(arguments));
             default:
                 return "";
             }
         } catch (WhimsyBotException e) {
-            return e.getMessage();
+            return includeStartupWarning(e.getMessage());
         }
+    }
+
+    private String includeStartupWarning(String response) {
+        if (startupWarning == null) {
+            return response;
+        }
+        String warning = startupWarning;
+        startupWarning = null;
+        return warning + System.lineSeparator() + response;
     }
 
     private void validateNoArguments(String commandWord, String arguments) throws WhimsyBotException {
@@ -254,7 +273,7 @@ public class WhimsyBot {
         return saveAddedTask(tasks.get(tasks.size() - 1));
     }
 
-    private String saveAddedTask(Task task) {
+    private String saveAddedTask(Task task) throws WhimsyBotException {
         saveTasks();
         return "Got it. I've added this task:" + System.lineSeparator() + "  " + task
                 + System.lineSeparator() + "Now you have " + tasks.size() + " tasks in the list.";
@@ -332,7 +351,7 @@ public class WhimsyBot {
         }
     }
 
-    private void saveTasks() {
+    private void saveTasks() throws WhimsyBotException {
         storage.save(tasks.toArray(), tasks.size());
     }
 }
