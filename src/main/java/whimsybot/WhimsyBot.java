@@ -43,12 +43,15 @@ public class WhimsyBot {
         try {
             switch (CommandType.fromString(commandWord)) {
             case BYE:
+                validateNoArguments(commandWord, arguments);
                 return "Bye. Hope to see you again soon!";
             case LIST:
+                validateNoArguments(commandWord, arguments);
                 return getTaskListResponse();
             case FIND:
                 return getFindResponse(arguments);
             case HELP:
+                validateNoArguments(commandWord, arguments);
                 return getHelpResponse();
             case TAG:
             case UNTAG:
@@ -70,6 +73,13 @@ public class WhimsyBot {
             }
         } catch (WhimsyBotException e) {
             return e.getMessage();
+        }
+    }
+
+    private void validateNoArguments(String commandWord, String arguments) throws WhimsyBotException {
+        if (!arguments.isEmpty()) {
+            throw new WhimsyBotException(
+                    "OOPS!!! The " + commandWord + " command does not accept any arguments.");
         }
     }
 

@@ -15,4 +15,14 @@ class ParserTest {
     void parse_commandWithoutArguments_returnsEmptyArguments() {
         assertArrayEquals(new String[] {"list", ""}, Parser.parse("list"));
     }
+
+    @Test
+    void parse_commandWithIrregularWhitespace_normalizesCommandWord() {
+        assertArrayEquals(new String[] {"todo", "buy milk"}, Parser.parse("  TODO    buy milk  "));
+    }
+
+    @Test
+    void parse_blankCommand_returnsEmptyParts() {
+        assertArrayEquals(new String[] {"", ""}, Parser.parse("   "));
+    }
 }

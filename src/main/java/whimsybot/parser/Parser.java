@@ -13,8 +13,11 @@ public class Parser {
      * @return an array containing the command word followed by its arguments
      */
     public static String[] parse(String command) {
-        String[] splitCommand = command.split(" ", 2);
-        String commandWord = splitCommand[0];
+        if (command == null || command.isBlank()) {
+            return new String[] {"", ""};
+        }
+        String[] splitCommand = command.trim().split("\\s+", 2);
+        String commandWord = splitCommand[0].toLowerCase();
         String arguments = splitCommand.length > 1 ? splitCommand[1].trim() : "";
         return new String[] {commandWord, arguments};
     }
