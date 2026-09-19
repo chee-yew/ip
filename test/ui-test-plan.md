@@ -32,6 +32,17 @@ ____________________________________________________________
 
 Greetings, brave planner!
 Which tiny quest shall we tackle today?
+I am Whimsy Bot, your cheerful questmaster for everyday tasks.
+I can help you capture quests, deadlines, events, and tags.
+
+Try these spells to begin:
+  todo DESCRIPTION - add a simple quest
+  deadline DESCRIPTION /by DATE - add a time-sensitive quest
+  event DESCRIPTION /from START /to END - pin an appointment
+  list - view your quest board
+  help - open the full spellbook
+
+Type a command below, and I will handle the busywork with a little magic.
 ____________________________________________________________
 ____________________________________________________________
 A new side quest has been tucked into your satchel:
@@ -76,6 +87,17 @@ ____________________________________________________________
 
 Greetings, brave planner!
 Which tiny quest shall we tackle today?
+I am Whimsy Bot, your cheerful questmaster for everyday tasks.
+I can help you capture quests, deadlines, events, and tags.
+
+Try these spells to begin:
+  todo DESCRIPTION - add a simple quest
+  deadline DESCRIPTION /by DATE - add a time-sensitive quest
+  event DESCRIPTION /from START /to END - pin an appointment
+  list - view your quest board
+  help - open the full spellbook
+
+Type a command below, and I will handle the busywork with a little magic.
 ____________________________________________________________
 ____________________________________________________________
 The spellbook is open. Here are the available incantations:
@@ -130,6 +152,17 @@ ____________________________________________________________
 
 Greetings, brave planner!
 Which tiny quest shall we tackle today?
+I am Whimsy Bot, your cheerful questmaster for everyday tasks.
+I can help you capture quests, deadlines, events, and tags.
+
+Try these spells to begin:
+  todo DESCRIPTION - add a simple quest
+  deadline DESCRIPTION /by DATE - add a time-sensitive quest
+  event DESCRIPTION /from START /to END - pin an appointment
+  list - view your quest board
+  help - open the full spellbook
+
+Type a command below, and I will handle the busywork with a little magic.
 ____________________________________________________________
 ____________________________________________________________
 A time-sensitive quest has joined the expedition:
@@ -192,6 +225,17 @@ ____________________________________________________________
 
 Greetings, brave planner!
 Which tiny quest shall we tackle today?
+I am Whimsy Bot, your cheerful questmaster for everyday tasks.
+I can help you capture quests, deadlines, events, and tags.
+
+Try these spells to begin:
+  todo DESCRIPTION - add a simple quest
+  deadline DESCRIPTION /by DATE - add a time-sensitive quest
+  event DESCRIPTION /from START /to END - pin an appointment
+  list - view your quest board
+  help - open the full spellbook
+
+Type a command below, and I will handle the busywork with a little magic.
 ____________________________________________________________
 ____________________________________________________________
 A new side quest has been tucked into your satchel:
@@ -265,9 +309,21 @@ ____________________________________________________________
 
 Greetings, brave planner!
 Which tiny quest shall we tackle today?
+I am Whimsy Bot, your cheerful questmaster for everyday tasks.
+I can help you capture quests, deadlines, events, and tags.
+
+Try these spells to begin:
+  todo DESCRIPTION - add a simple quest
+  deadline DESCRIPTION /by DATE - add a time-sensitive quest
+  event DESCRIPTION /from START /to END - pin an appointment
+  list - view your quest board
+  help - open the full spellbook
+
+Type a command below, and I will handle the busywork with a little magic.
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! The command pixie could not decipher that spell.
+Type 'help' to open the spellbook and see the commands I understand.
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! The list spell does not accept any extra ingredients.

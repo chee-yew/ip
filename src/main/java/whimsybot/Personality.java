@@ -1,5 +1,7 @@
 package whimsybot;
 
+import java.util.StringJoiner;
+
 import whimsybot.task.Deadline;
 import whimsybot.task.Event;
 import whimsybot.task.Task;
@@ -18,6 +20,23 @@ public final class Personality {
     /** Returns the second line of the console welcome message. */
     public static String welcomePrompt() {
         return "Which tiny quest shall we tackle today?";
+    }
+
+    /** Returns the first-use guide shown when the chatbot starts. */
+    public static String introduction() {
+        StringJoiner introduction = new StringJoiner(System.lineSeparator());
+        introduction.add("I am Whimsy Bot, your cheerful questmaster for everyday tasks.");
+        introduction.add("I can help you capture quests, deadlines, events, and tags.");
+        introduction.add("");
+        introduction.add("Try these spells to begin:");
+        introduction.add("  todo DESCRIPTION - add a simple quest");
+        introduction.add("  deadline DESCRIPTION /by DATE - add a time-sensitive quest");
+        introduction.add("  event DESCRIPTION /from START /to END - pin an appointment");
+        introduction.add("  list - view your quest board");
+        introduction.add("  help - open the full spellbook");
+        introduction.add("");
+        introduction.add("Type a command below, and I will handle the busywork with a little magic.");
+        return introduction.toString();
     }
 
     /** Returns the introduction to a task-list response. */
@@ -71,7 +90,9 @@ public final class Personality {
 
     /** Returns the response for an unknown command. */
     public static String unknownCommand() {
-        return "OOPS!!! The command pixie could not decipher that spell.";
+        return "OOPS!!! The command pixie could not decipher that spell."
+                + System.lineSeparator()
+                + "Type 'help' to open the spellbook and see the commands I understand.";
     }
 
     /** Returns the response for a command that received unexpected arguments. */

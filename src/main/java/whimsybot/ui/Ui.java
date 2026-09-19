@@ -23,7 +23,7 @@ public class Ui {
                 + "|  _ \\ / _ \\| __|\n"
                 + "| |_) | (_) | |_ \n"
                 + "|____/ \\___/ \\__|\n");
-        show(Personality.welcomeGreeting(), Personality.welcomePrompt());
+        show(Personality.welcomeGreeting(), Personality.welcomePrompt(), Personality.introduction());
         showLine();
     }
 

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import whimsybot.Personality;
 import whimsybot.WhimsyBot;
 
 /** Controller for the main Whimsy Bot window. */
@@ -20,6 +21,7 @@ public class MainWindow {
     /** Connects the controller to the chatbot logic. */
     public void setWhimsyBot(WhimsyBot bot) {
         whimsyBot = bot;
+        dialogContainer.getChildren().add(DialogBox.getWhimsyBotDialog(Personality.introduction()));
     }
 
     /** Keeps the newest message visible as the conversation grows. */

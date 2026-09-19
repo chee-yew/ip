@@ -34,6 +34,13 @@ class WhimsyBotTest {
     }
 
     @Test
+    void unknownCommand_suggestsHelpCommand() {
+        WhimsyBot bot = new WhimsyBot();
+
+        assertTrue(bot.getResponse("abracadabra").contains("Type 'help'"));
+    }
+
+    @Test
     void deadlineCommand_withImpossibleIsoDate_returnsHelpfulError() {
         WhimsyBot bot = new WhimsyBot();
 
