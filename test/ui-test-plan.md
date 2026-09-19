@@ -30,20 +30,31 @@ ____________________________________________________________
 | |_) | (_) | |_
 |____/ \___/ \__|
 
-Hello! I'm Whimsy Bot.
-What can I do for you today?
+Greetings, brave planner!
+Which tiny quest shall we tackle today?
+I am Whimsy Bot, your cheerful questmaster for everyday tasks.
+I can help you capture quests, deadlines, events, and tags.
+
+Try these spells to begin:
+  todo DESCRIPTION - add a simple quest
+  deadline DESCRIPTION /by DATE - add a time-sensitive quest
+  event DESCRIPTION /from START /to END - pin an appointment
+  list - view your quest board
+  help - open the full spellbook
+
+Type a command below, and I will handle the busywork with a little magic.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+A new side quest has been tucked into your satchel:
   [T][ ] read book
 Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Behold, your current constellation of quests:
 1.[T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Farewell, brave planner! May your to-do list remain enchantingly short.
 ____________________________________________________________
 ```
 
@@ -72,13 +83,24 @@ ____________________________________________________________
 | __ )  ___ | |_ 
 |  _ \ / _ \| __|
 | |_) | (_) | |_ 
-|____/ \___/|__|
+|____/ \___/ \__|
 
-Hello! I'm Whimsy Bot.
-What can I do for you today?
+Greetings, brave planner!
+Which tiny quest shall we tackle today?
+I am Whimsy Bot, your cheerful questmaster for everyday tasks.
+I can help you capture quests, deadlines, events, and tags.
+
+Try these spells to begin:
+  todo DESCRIPTION - add a simple quest
+  deadline DESCRIPTION /by DATE - add a time-sensitive quest
+  event DESCRIPTION /from START /to END - pin an appointment
+  list - view your quest board
+  help - open the full spellbook
+
+Type a command below, and I will handle the busywork with a little magic.
 ____________________________________________________________
 ____________________________________________________________
-Here is how to use Whimsy Bot:
+The spellbook is open. Here are the available incantations:
   todo DESCRIPTION - add a task without a date
   deadline DESCRIPTION /by DATE - add a task with a deadline
   event DESCRIPTION /from START /to END - add an event
@@ -93,7 +115,7 @@ Here is how to use Whimsy Bot:
   bye - exit Whimsy Bot
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Farewell, brave planner! May your to-do list remain enchantingly short.
 ____________________________________________________________
 ```
 
@@ -128,34 +150,45 @@ ____________________________________________________________
 | |_) | (_) | |_ 
 |____/ \___/ \__|
 
-Hello! I'm Whimsy Bot.
-What can I do for you today?
+Greetings, brave planner!
+Which tiny quest shall we tackle today?
+I am Whimsy Bot, your cheerful questmaster for everyday tasks.
+I can help you capture quests, deadlines, events, and tags.
+
+Try these spells to begin:
+  todo DESCRIPTION - add a simple quest
+  deadline DESCRIPTION /by DATE - add a time-sensitive quest
+  event DESCRIPTION /from START /to END - pin an appointment
+  list - view your quest board
+  help - open the full spellbook
+
+Type a command below, and I will handle the busywork with a little magic.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+A time-sensitive quest has joined the expedition:
   [D][ ] return book (by: Friday)
 Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+An appointment has been pinned to the adventure map:
   [E][ ] project meeting (from: Monday 2pm to: 4pm)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Victory! One chore has been banished to the realm of Done:
   [D][X] return book (by: Friday)
 ____________________________________________________________
 ____________________________________________________________
-OK, I've marked this task as not done yet:
+The quest has returned from retirement:
   [D][ ] return book (by: Friday)
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Behold, your current constellation of quests:
 1.[D][ ] return book (by: Friday)
 2.[E][ ] project meeting (from: Monday 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Farewell, brave planner! May your to-do list remain enchantingly short.
 ____________________________________________________________
 ```
 
@@ -190,36 +223,47 @@ ____________________________________________________________
 | |_) | (_) | |_ 
 |____/ \___/ \__|
 
-Hello! I'm Whimsy Bot.
-What can I do for you today?
+Greetings, brave planner!
+Which tiny quest shall we tackle today?
+I am Whimsy Bot, your cheerful questmaster for everyday tasks.
+I can help you capture quests, deadlines, events, and tags.
+
+Try these spells to begin:
+  todo DESCRIPTION - add a simple quest
+  deadline DESCRIPTION /by DATE - add a time-sensitive quest
+  event DESCRIPTION /from START /to END - pin an appointment
+  list - view your quest board
+  help - open the full spellbook
+
+Type a command below, and I will handle the busywork with a little magic.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+A new side quest has been tucked into your satchel:
   [T][ ] read book
 Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+A time-sensitive quest has joined the expedition:
   [D][ ] return book (by: Friday)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+An appointment has been pinned to the adventure map:
   [E][ ] project meeting (from: Monday 2pm to: 4pm)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Noted. I've removed this task:
+Plucked from the quest board and sent to the archives:
   [D][ ] return book (by: Friday)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Behold, your current constellation of quests:
 1.[T][ ] read book
 2.[E][ ] project meeting (from: Monday 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Farewell, brave planner! May your to-do list remain enchantingly short.
 ____________________________________________________________
 ```
 
@@ -263,23 +307,35 @@ ____________________________________________________________
 | |_) | (_) | |_ 
 |____/ \___/ \__|
 
-Hello! I'm Whimsy Bot.
-What can I do for you today?
+Greetings, brave planner!
+Which tiny quest shall we tackle today?
+I am Whimsy Bot, your cheerful questmaster for everyday tasks.
+I can help you capture quests, deadlines, events, and tags.
+
+Try these spells to begin:
+  todo DESCRIPTION - add a simple quest
+  deadline DESCRIPTION /by DATE - add a time-sensitive quest
+  event DESCRIPTION /from START /to END - pin an appointment
+  list - view your quest board
+  help - open the full spellbook
+
+Type a command below, and I will handle the busywork with a little magic.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! I'm sorry, but I don't know what that means :-(
+OOPS!!! The command pixie could not decipher that spell.
+Type 'help' to open the spellbook and see the commands I understand.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! The list command does not accept any arguments.
+OOPS!!! The list spell does not accept any extra ingredients.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! The description of a todo cannot be empty.
+OOPS!!! Even the quest pixie needs a description for your todo.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! Please specify a deadline, e.g. 'deadline return book /by Sunday'.
+OOPS!!! The deadline quest needs a date, e.g. 'deadline return book /by Sunday'.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! Please specify the event's start and end, e.g. 'event project meeting /from Monday 2pm /to 4pm'.
+OOPS!!! The event quest needs a start and end, e.g. 'event project meeting /from Monday 2pm /to 4pm'.
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! The deadline must be a valid date, such as 2026-09-20.
@@ -288,30 +344,30 @@ ____________________________________________________________
 OOPS!!! An event's start date must be before its end date.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! There is no task number 5 in your list.
+OOPS!!! There is no quest number 5 on your quest board.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! The task number must be a whole number.
+OOPS!!! Task numbers must be whole numbers, brave planner.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! There is no task number 5 in your list.
+OOPS!!! There is no quest number 5 on your quest board.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! The task number must be a whole number.
+OOPS!!! Task numbers must be whole numbers, brave planner.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+A new side quest has been tucked into your satchel:
   [T][ ] read book
 Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! This task is already in your list. Please add a different task.
+OOPS!!! That quest is already in your satchel.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Behold, your current constellation of quests:
 1.[T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Farewell, brave planner! May your to-do list remain enchantingly short.
 ____________________________________________________________
 ```

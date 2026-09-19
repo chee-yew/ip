@@ -18,7 +18,7 @@ public class Main extends Application {
             Scene scene = new Scene(fxmlLoader.load());
             MainWindow controller = fxmlLoader.getController();
             controller.setWhimsyBot(new WhimsyBot());
-            stage.setTitle("Whimsy Bot");
+            stage.setTitle("Whimsy Bot | Quest Desk");
             stage.setScene(scene);
             stage.setMinWidth(360);
             stage.setMinHeight(480);

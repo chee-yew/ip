@@ -1,5 +1,6 @@
 package whimsybot.parser;
 
+import whimsybot.Personality;
 import whimsybot.WhimsyBotException;
 
 /**
@@ -42,7 +43,7 @@ public enum CommandType {
         case "bye":
             return BYE;
         default:
-            throw new WhimsyBotException("OOPS!!! I'm sorry, but I don't know what that means :-(");
+            throw new WhimsyBotException(Personality.unknownCommand());
         }
     }
 }

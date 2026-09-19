@@ -39,7 +39,7 @@ public class WhimsyBot {
             savedTasks = storage.load();
         } catch (StorageException e) {
             savedTasks = List.of();
-            startupWarning = "OOPS!!! " + e.getMessage();
+            startupWarning = Personality.storageFailure(e.getMessage());
         }
         tasks = new TaskList(savedTasks);
     }
@@ -58,7 +58,7 @@ public class WhimsyBot {
             switch (CommandType.fromString(commandWord)) {
             case BYE:
                 validateNoArguments(commandWord, arguments);
-                return includeStartupWarning("Bye. Hope to see you again soon!");
+                return includeStartupWarning(Personality.goodbye());
             case LIST:
                 validateNoArguments(commandWord, arguments);
                 return includeStartupWarning(getTaskListResponse());
@@ -102,7 +102,7 @@ public class WhimsyBot {
     private void validateNoArguments(String commandWord, String arguments) throws WhimsyBotException {
         if (!arguments.isEmpty()) {
             throw new WhimsyBotException(
-                    "OOPS!!! The " + commandWord + " command does not accept any arguments.");
+                    Personality.unexpectedArguments(commandWord));
         }
     }
 
@@ -126,14 +126,14 @@ public class WhimsyBot {
     private String getTaskListResponse() {
         return IntStream.range(0, tasks.size())
                 .mapToObj(index -> System.lineSeparator() + (index + 1) + "." + tasks.get(index))
-                .collect(Collectors.joining("", "Here are the tasks in your list:", ""));
+                .collect(Collectors.joining("", Personality.taskListIntro(), ""));
     }
 
     private String getFindResponse(String keyword) throws WhimsyBotException {
         if (keyword.isEmpty()) {
-            throw new WhimsyBotException("OOPS!!! Please specify a keyword to find.");
+            throw new WhimsyBotException("OOPS!!! The search sprite needs a keyword to sniff out.");
         }
-        StringBuilder response = new StringBuilder("Here are the matching tasks in your list:");
+        StringBuilder response = new StringBuilder(Personality.findIntro());
         int match = 1;
         for (int i = 0; i < tasks.size(); i++) {
             if (tasks.get(i).getDescription().toLowerCase().contains(keyword.toLowerCase())) {
@@ -146,7 +146,7 @@ public class WhimsyBot {
     /** Returns concise in-app guidance for the commands supported by Whimsy Bot. */
     private String getHelpResponse() {
         return String.join(System.lineSeparator(),
-                "Here is how to use Whimsy Bot:",
+                Personality.helpIntro(),
                 "  todo DESCRIPTION - add a task without a date",
                 "  deadline DESCRIPTION /by DATE - add a task with a deadline",
                 "  event DESCRIPTION /from START /to END - add an event",
@@ -164,7 +164,7 @@ public class WhimsyBot {
     private String processTagCommand(String commandWord, String arguments) throws WhimsyBotException {
         String[] parts = arguments.split(" ", 2);
         if (parts.length < 2 || parts[1].trim().isEmpty()) {
-            throw new WhimsyBotException("OOPS!!! Please specify a task number and a tag.");
+            throw new WhimsyBotException(Personality.missingTag());
         }
         int taskNumber = parseTaskNumber(parts[0], commandWord, tasks.size());
         String tag = parts[1].trim();
@@ -172,8 +172,7 @@ public class WhimsyBot {
             tag = tag.substring(1);
         }
         if (!tag.matches("[A-Za-z0-9_-]+")) {
-            throw new WhimsyBotException(
-                    "OOPS!!! Tags may contain only letters, numbers, underscores, and hyphens.");
+            throw new WhimsyBotException(Personality.invalidTag());
         }
         boolean isAdding = commandWord.equals("tag");
         if (isAdding) {
@@ -182,7 +181,7 @@ public class WhimsyBot {
             tasks.get(taskNumber - 1).removeTag(tag);
         }
         saveTasks();
-        return (isAdding ? "Added" : "Removed") + " tag #" + tag + "."
+        return Personality.updatedTagIntro(isAdding, tag)
                 + System.lineSeparator() + "  " + tasks.get(taskNumber - 1);
     }
 
@@ -194,9 +193,7 @@ public class WhimsyBot {
             tasks.unmark(taskNumber - 1);
         }
         saveTasks();
-        String response = isMarking
-                ? "Nice! I've marked this task as done:"
-                : "OK, I've marked this task as not done yet:";
+        String response = Personality.markedTaskIntro(isMarking);
         return response + System.lineSeparator() + "  " + tasks.get(taskNumber - 1);
     }
 
@@ -204,13 +201,13 @@ public class WhimsyBot {
         int taskNumber = parseTaskNumber(argument, "delete", tasks.size());
         Task removedTask = tasks.delete(taskNumber - 1);
         saveTasks();
-        return "Noted. I've removed this task:" + System.lineSeparator() + "  " + removedTask
+        return Personality.deletedTaskIntro() + System.lineSeparator() + "  " + removedTask
                 + System.lineSeparator() + "Now you have " + tasks.size() + " tasks in the list.";
     }
 
     private String processTodoCommand(String arguments) throws WhimsyBotException {
         if (arguments.isEmpty()) {
-            throw new WhimsyBotException("OOPS!!! The description of a todo cannot be empty.");
+            throw new WhimsyBotException(Personality.emptyDescription("todo"));
         }
         checkListNotFull();
         Todo task = new Todo(arguments);
@@ -221,16 +218,15 @@ public class WhimsyBot {
 
     private String processDeadlineCommand(String arguments) throws WhimsyBotException {
         if (arguments.isEmpty()) {
-            throw new WhimsyBotException("OOPS!!! The description of a deadline cannot be empty.");
+            throw new WhimsyBotException(Personality.emptyDescription("deadline"));
         }
         String[] parts = arguments.split("(?i)\\s+/by\\s+", -1);
         String description = parts[0].trim();
         if (description.isEmpty()) {
-            throw new WhimsyBotException("OOPS!!! The description of a deadline cannot be empty.");
+            throw new WhimsyBotException(Personality.emptyDescription("deadline"));
         }
         if (parts.length != 2 || parts[1].trim().isEmpty()) {
-            throw new WhimsyBotException(
-                    "OOPS!!! Please specify a deadline, e.g. 'deadline " + description + " /by Sunday'.");
+            throw new WhimsyBotException(Personality.missingDeadline(description));
         }
         String deadline = parts[1].trim();
         validateDateValue(deadline, "deadline");
@@ -243,23 +239,19 @@ public class WhimsyBot {
 
     private String processEventCommand(String arguments) throws WhimsyBotException {
         if (arguments.isEmpty()) {
-            throw new WhimsyBotException("OOPS!!! The description of an event cannot be empty.");
+            throw new WhimsyBotException(Personality.emptyDescription("event"));
         }
         String[] descriptionAndTimes = arguments.split("(?i)\\s+/from\\s+", -1);
         String description = descriptionAndTimes[0].trim();
         if (description.isEmpty()) {
-            throw new WhimsyBotException("OOPS!!! The description of an event cannot be empty.");
+            throw new WhimsyBotException(Personality.emptyDescription("event"));
         }
         if (descriptionAndTimes.length != 2 || descriptionAndTimes[1].trim().isEmpty()) {
-            throw new WhimsyBotException(
-                    "OOPS!!! Please specify the event's start and end, e.g. 'event "
-                            + description + " /from Monday 2pm /to 4pm'.");
+            throw new WhimsyBotException(Personality.missingEventTimes(description));
         }
         String[] times = descriptionAndTimes[1].split("(?i)\\s+/to\\s+", -1);
         if (times.length != 2 || times[0].trim().isEmpty() || times[1].trim().isEmpty()) {
-            throw new WhimsyBotException(
-                    "OOPS!!! Please specify the event's start and end, e.g. 'event "
-                            + description + " /from Monday 2pm /to 4pm'.");
+            throw new WhimsyBotException(Personality.missingEventTimes(description));
         }
         String from = times[0].trim();
         String to = times[1].trim();
@@ -275,7 +267,7 @@ public class WhimsyBot {
 
     private String saveAddedTask(Task task) throws WhimsyBotException {
         saveTasks();
-        return "Got it. I've added this task:" + System.lineSeparator() + "  " + task
+        return Personality.addedTaskIntro(task) + System.lineSeparator() + "  " + task
                 + System.lineSeparator() + "Now you have " + tasks.size() + " tasks in the list.";
     }
 
@@ -283,8 +275,7 @@ public class WhimsyBot {
         for (int i = 0; i < tasks.size(); i++) {
             Task existing = tasks.get(i);
             if (isDuplicate(existing, candidate)) {
-                throw new WhimsyBotException(
-                        "OOPS!!! This task is already in your list. Please add a different task.");
+                throw new WhimsyBotException(Personality.duplicateTask());
             }
         }
     }
@@ -311,8 +302,7 @@ public class WhimsyBot {
         try {
             LocalDate.parse(value);
         } catch (DateTimeParseException e) {
-            throw new WhimsyBotException("OOPS!!! The " + fieldName
-                    + " must be a valid date, such as 2026-09-20.");
+            throw new WhimsyBotException(Personality.invalidDate(fieldName));
         }
     }
 
@@ -323,31 +313,30 @@ public class WhimsyBot {
         LocalDate fromDate = LocalDate.parse(from);
         LocalDate toDate = LocalDate.parse(to);
         if (!fromDate.isBefore(toDate)) {
-            throw new WhimsyBotException(
-                    "OOPS!!! An event's start date must be before its end date.");
+            throw new WhimsyBotException(Personality.reversedEventDates());
         }
     }
 
     private int parseTaskNumber(String argument, String commandName, int taskCount)
             throws WhimsyBotException {
         if (argument.isEmpty()) {
-            throw new WhimsyBotException("OOPS!!! Please specify which task number to " + commandName + ".");
+            throw new WhimsyBotException(Personality.missingTaskNumber(commandName));
         }
         int taskNumber;
         try {
             taskNumber = Integer.parseInt(argument);
         } catch (NumberFormatException e) {
-            throw new WhimsyBotException("OOPS!!! The task number must be a whole number.");
+            throw new WhimsyBotException(Personality.invalidTaskNumber());
         }
         if (taskNumber < 1 || taskNumber > taskCount) {
-            throw new WhimsyBotException("OOPS!!! There is no task number " + taskNumber + " in your list.");
+            throw new WhimsyBotException(Personality.missingTaskNumber(taskNumber));
         }
         return taskNumber;
     }
 
     private void checkListNotFull() throws WhimsyBotException {
         if (!tasks.canAdd()) {
-            throw new WhimsyBotException("OOPS!!! Your task list is full, I can't add any more tasks.");
+            throw new WhimsyBotException(Personality.fullQuestBoard());
         }
     }
 
@@ -355,7 +344,7 @@ public class WhimsyBot {
         try {
             storage.save(tasks.toArray(), tasks.size());
         } catch (StorageException e) {
-            throw new WhimsyBotException("OOPS!!! " + e.getMessage());
+            throw new WhimsyBotException(Personality.storageFailure(e.getMessage()));
         }
     }
 }

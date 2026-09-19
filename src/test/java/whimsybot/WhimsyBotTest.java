@@ -13,7 +13,7 @@ class WhimsyBotTest {
 
         String response = bot.getResponse("help");
 
-        assertTrue(response.contains("Here is how to use Whimsy Bot:"));
+        assertTrue(response.contains("The spellbook is open. Here are the available incantations:"));
         assertTrue(response.contains("  todo DESCRIPTION - add a task without a date"));
         assertTrue(response.contains("  bye - exit Whimsy Bot"));
     }
@@ -22,7 +22,7 @@ class WhimsyBotTest {
     void listCommand_withUnexpectedArguments_returnsHelpfulError() {
         WhimsyBot bot = new WhimsyBot();
 
-        assertEquals("OOPS!!! The list command does not accept any arguments.",
+        assertEquals("OOPS!!! The list spell does not accept any extra ingredients.",
                 bot.getResponse("list now"));
     }
 
@@ -30,7 +30,14 @@ class WhimsyBotTest {
     void commandWithIrregularWhitespace_isStillRecognized() {
         WhimsyBot bot = new WhimsyBot();
 
-        assertTrue(bot.getResponse("  HELP  ").startsWith("Here is how to use Whimsy Bot:"));
+        assertTrue(bot.getResponse("  HELP  ").startsWith("The spellbook is open."));
+    }
+
+    @Test
+    void unknownCommand_suggestsHelpCommand() {
+        WhimsyBot bot = new WhimsyBot();
+
+        assertTrue(bot.getResponse("abracadabra").contains("Type 'help'"));
     }
 
     @Test
@@ -56,7 +63,7 @@ class WhimsyBotTest {
 
         bot.getResponse(command);
 
-        assertEquals("OOPS!!! This task is already in your list. Please add a different task.",
+        assertEquals("OOPS!!! That quest is already in your satchel.",
                 bot.getResponse(command));
     }
 }
