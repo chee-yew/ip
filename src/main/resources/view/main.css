@@ -1,6 +1,10 @@
 .root {
     -fx-font-family: "Segoe UI";
     -fx-background-color: #f7f4ff;
+    -fx-background-image: url("../images/quest-background.png");
+    -fx-background-repeat: repeat-x;
+    -fx-background-position: center top;
+    -fx-background-size: auto 120px;
 }
 
 .scroll-pane, .scroll-pane .viewport {
@@ -76,6 +80,5 @@
 }
 
 .avatar {
-    -fx-font-size: 20px;
     -fx-padding: 3px 6px 0 6px;
 }
