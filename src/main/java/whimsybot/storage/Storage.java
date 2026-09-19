@@ -23,7 +23,7 @@ public class Storage {
      * @param tasks the array containing the tasks to save
      * @param taskCount the number of valid tasks in the array
      */
-    public void save(Task[] tasks, int taskCount) {
+    public void save(Task[] tasks, int taskCount) throws StorageException {
         // TaskList supplies a compact prefix whose count cannot exceed the backing array.
         assert tasks != null : "Tasks array must not be null";
         assert taskCount >= 0 && taskCount <= tasks.length : "Task count must fit in the tasks array";
@@ -36,8 +36,9 @@ public class Storage {
                 lines.add(serialize(tasks[i]));
             }
             Files.write(FILE_PATH, lines, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            // The chatbot can continue running even when the file cannot be written.
+        } catch (IOException | SecurityException e) {
+            throw new StorageException(
+                    "Unable to save your tasks. Please check that the data folder is writable.", e);
         }
     }
 
@@ -67,7 +68,7 @@ public class Storage {
     }
 
     /** Loads valid tasks and ignores malformed records so one bad line cannot break startup. */
-    public List<Task> load() {
+    public List<Task> load() throws StorageException {
         List<Task> tasks = new ArrayList<>();
         if (!Files.exists(FILE_PATH)) {
             return tasks;
@@ -79,8 +80,9 @@ public class Storage {
                     tasks.add(task);
                 }
             }
-        } catch (IOException e) {
-            return tasks;
+        } catch (IOException | SecurityException e) {
+            throw new StorageException(
+                    "Unable to load your saved tasks. Please check that the data file is readable.", e);
         }
         return tasks;
     }
