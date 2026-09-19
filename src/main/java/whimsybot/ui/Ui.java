@@ -2,6 +2,8 @@ package whimsybot.ui;
 
 import java.util.Scanner;
 
+import whimsybot.Personality;
+
 /** Handles Whimsy Bot's interaction with the user through the console. */
 public class Ui {
     private static final String SEPARATOR = "____________________________________________________________";
@@ -21,7 +23,7 @@ public class Ui {
                 + "|  _ \\ / _ \\| __|\n"
                 + "| |_) | (_) | |_ \n"
                 + "|____/ \\___/ \\__|\n");
-        show("Hello! I'm Whimsy Bot.", "What can I do for you today?");
+        show(Personality.welcomeGreeting(), Personality.welcomePrompt());
         showLine();
     }
 
