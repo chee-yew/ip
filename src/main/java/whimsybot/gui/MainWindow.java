@@ -36,9 +36,12 @@ public class MainWindow {
             return;
         }
         String response = whimsyBot.getResponse(input);
+        DialogBox responseDialog = response.startsWith("OOPS!!!")
+                ? DialogBox.getErrorDialog(response)
+                : DialogBox.getWhimsyBotDialog(response);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input),
-                DialogBox.getWhimsyBotDialog(response));
+                responseDialog);
         userInput.clear();
     }
 }

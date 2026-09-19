@@ -20,8 +20,8 @@ public class Main extends Application {
             controller.setWhimsyBot(new WhimsyBot());
             stage.setTitle("Whimsy Bot");
             stage.setScene(scene);
-            stage.setMinWidth(420);
-            stage.setMinHeight(600);
+            stage.setMinWidth(360);
+            stage.setMinHeight(480);
             stage.show();
         } catch (IOException e) {
             throw new IllegalStateException("Unable to load the main window.", e);
