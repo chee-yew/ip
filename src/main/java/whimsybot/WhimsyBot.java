@@ -1,5 +1,8 @@
 package whimsybot;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -21,6 +24,7 @@ import whimsybot.ui.Ui;
  * kept in one place.</p>
  */
 public class WhimsyBot {
+    private static final Pattern ISO_DATE_PATTERN = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
     private final TaskList tasks;
     private final Storage storage;
 
@@ -190,7 +194,9 @@ public class WhimsyBot {
             throw new WhimsyBotException("OOPS!!! The description of a todo cannot be empty.");
         }
         checkListNotFull();
-        tasks.add(new Todo(arguments));
+        Todo task = new Todo(arguments);
+        checkForDuplicate(task);
+        tasks.add(task);
         return saveAddedTask(tasks.get(tasks.size() - 1));
     }
 
@@ -198,17 +204,21 @@ public class WhimsyBot {
         if (arguments.isEmpty()) {
             throw new WhimsyBotException("OOPS!!! The description of a deadline cannot be empty.");
         }
-        String[] parts = arguments.split(" /by ", 2);
+        String[] parts = arguments.split("(?i)\\s+/by\\s+", -1);
         String description = parts[0].trim();
         if (description.isEmpty()) {
             throw new WhimsyBotException("OOPS!!! The description of a deadline cannot be empty.");
         }
-        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+        if (parts.length != 2 || parts[1].trim().isEmpty()) {
             throw new WhimsyBotException(
                     "OOPS!!! Please specify a deadline, e.g. 'deadline " + description + " /by Sunday'.");
         }
+        String deadline = parts[1].trim();
+        validateDateValue(deadline, "deadline");
         checkListNotFull();
-        tasks.add(new Deadline(description, parts[1].trim()));
+        Deadline task = new Deadline(description, deadline);
+        checkForDuplicate(task);
+        tasks.add(task);
         return saveAddedTask(tasks.get(tasks.size() - 1));
     }
 
@@ -216,24 +226,31 @@ public class WhimsyBot {
         if (arguments.isEmpty()) {
             throw new WhimsyBotException("OOPS!!! The description of an event cannot be empty.");
         }
-        String[] descriptionAndTimes = arguments.split(" /from ", 2);
+        String[] descriptionAndTimes = arguments.split("(?i)\\s+/from\\s+", -1);
         String description = descriptionAndTimes[0].trim();
         if (description.isEmpty()) {
             throw new WhimsyBotException("OOPS!!! The description of an event cannot be empty.");
         }
-        if (descriptionAndTimes.length < 2 || descriptionAndTimes[1].trim().isEmpty()) {
+        if (descriptionAndTimes.length != 2 || descriptionAndTimes[1].trim().isEmpty()) {
             throw new WhimsyBotException(
                     "OOPS!!! Please specify the event's start and end, e.g. 'event "
                             + description + " /from Monday 2pm /to 4pm'.");
         }
-        String[] times = descriptionAndTimes[1].split(" /to ", 2);
-        if (times.length < 2 || times[0].trim().isEmpty() || times[1].trim().isEmpty()) {
+        String[] times = descriptionAndTimes[1].split("(?i)\\s+/to\\s+", -1);
+        if (times.length != 2 || times[0].trim().isEmpty() || times[1].trim().isEmpty()) {
             throw new WhimsyBotException(
                     "OOPS!!! Please specify the event's start and end, e.g. 'event "
                             + description + " /from Monday 2pm /to 4pm'.");
         }
+        String from = times[0].trim();
+        String to = times[1].trim();
+        validateDateValue(from, "event start");
+        validateDateValue(to, "event end");
+        validateEventOrder(from, to);
         checkListNotFull();
-        tasks.add(new Event(description, times[0].trim(), times[1].trim()));
+        Event task = new Event(description, from, to);
+        checkForDuplicate(task);
+        tasks.add(task);
         return saveAddedTask(tasks.get(tasks.size() - 1));
     }
 
@@ -241,6 +258,55 @@ public class WhimsyBot {
         saveTasks();
         return "Got it. I've added this task:" + System.lineSeparator() + "  " + task
                 + System.lineSeparator() + "Now you have " + tasks.size() + " tasks in the list.";
+    }
+
+    private void checkForDuplicate(Task candidate) throws WhimsyBotException {
+        for (int i = 0; i < tasks.size(); i++) {
+            Task existing = tasks.get(i);
+            if (isDuplicate(existing, candidate)) {
+                throw new WhimsyBotException(
+                        "OOPS!!! This task is already in your list. Please add a different task.");
+            }
+        }
+    }
+
+    private boolean isDuplicate(Task first, Task second) {
+        if (first.getClass() != second.getClass()
+                || !first.getDescription().equals(second.getDescription())) {
+            return false;
+        }
+        if (first instanceof Deadline firstDeadline && second instanceof Deadline secondDeadline) {
+            return firstDeadline.getBy().equals(secondDeadline.getBy());
+        }
+        if (first instanceof Event firstEvent && second instanceof Event secondEvent) {
+            return firstEvent.getFrom().equals(secondEvent.getFrom())
+                    && firstEvent.getTo().equals(secondEvent.getTo());
+        }
+        return true;
+    }
+
+    private void validateDateValue(String value, String fieldName) throws WhimsyBotException {
+        if (!ISO_DATE_PATTERN.matcher(value).matches()) {
+            return;
+        }
+        try {
+            LocalDate.parse(value);
+        } catch (DateTimeParseException e) {
+            throw new WhimsyBotException("OOPS!!! The " + fieldName
+                    + " must be a valid date, such as 2026-09-20.");
+        }
+    }
+
+    private void validateEventOrder(String from, String to) throws WhimsyBotException {
+        if (!ISO_DATE_PATTERN.matcher(from).matches() || !ISO_DATE_PATTERN.matcher(to).matches()) {
+            return;
+        }
+        LocalDate fromDate = LocalDate.parse(from);
+        LocalDate toDate = LocalDate.parse(to);
+        if (!fromDate.isBefore(toDate)) {
+            throw new WhimsyBotException(
+                    "OOPS!!! An event's start date must be before its end date.");
+        }
     }
 
     private int parseTaskNumber(String argument, String commandName, int taskCount)
