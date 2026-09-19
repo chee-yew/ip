@@ -6,24 +6,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="420.0"
+<AnchorPane prefHeight="700.0" prefWidth="520.0"
             xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="whimsybot.gui.MainWindow"
             stylesheets="@main.css">
     <children>
         <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER"
-                    AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="0.0"
+                    styleClass="conversation-scroll-pane"
+                    AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="0.0"
                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <content>
-                <VBox fx:id="dialogContainer" spacing="8.0" />
+                <VBox fx:id="dialogContainer" spacing="6.0" styleClass="dialog-container" />
             </content>
         </ScrollPane>
-        <TextField fx:id="userInput" promptText="Type a command..."
+        <TextField fx:id="userInput" promptText="Type a command..." styleClass="command-input"
                    onAction="#handleUserInput"
-                   AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="6.0"
-                   AnchorPane.rightAnchor="86.0" />
+                   AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="16.0"
+                   AnchorPane.rightAnchor="104.0" />
         <Button mnemonicParsing="false" onAction="#handleUserInput" text="Send"
-                AnchorPane.bottomAnchor="6.0" AnchorPane.rightAnchor="6.0" />
+                styleClass="send-button"
+                AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="16.0" />
     </children>
 </AnchorPane>
