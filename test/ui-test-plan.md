@@ -43,7 +43,7 @@ Behold, your current constellation of quests:
 1.[T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Farewell, brave planner! May your to-do list remain enchantingly short.
 ____________________________________________________________
 ```
 
@@ -72,7 +72,7 @@ ____________________________________________________________
 | __ )  ___ | |_ 
 |  _ \ / _ \| __|
 | |_) | (_) | |_ 
-|____/ \___/|__|
+|____/ \___/ \__|
 
 Greetings, brave planner!
 Which tiny quest shall we tackle today?
@@ -93,7 +93,7 @@ The spellbook is open. Here are the available incantations:
   bye - exit Whimsy Bot
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Farewell, brave planner! May your to-do list remain enchantingly short.
 ____________________________________________________________
 ```
 
@@ -155,7 +155,7 @@ Behold, your current constellation of quests:
 2.[E][ ] project meeting (from: Monday 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Farewell, brave planner! May your to-do list remain enchantingly short.
 ____________________________________________________________
 ```
 
@@ -219,7 +219,7 @@ Behold, your current constellation of quests:
 2.[E][ ] project meeting (from: Monday 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Farewell, brave planner! May your to-do list remain enchantingly short.
 ____________________________________________________________
 ```
 
@@ -312,6 +312,6 @@ Behold, your current constellation of quests:
 1.[T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Farewell, brave planner! May your to-do list remain enchantingly short.
 ____________________________________________________________
 ```
