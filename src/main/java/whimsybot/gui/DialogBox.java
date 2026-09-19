@@ -43,4 +43,12 @@ public class DialogBox extends HBox {
         return dialogBox;
     }
 
+    /** Creates a Whimsy Bot dialog box styled as an error response. */
+    public static DialogBox getErrorDialog(String text) {
+        DialogBox dialogBox = getWhimsyBotDialog(text);
+        dialogBox.avatar.setText("⚠️");
+        dialogBox.getStyleClass().add("error-dialog");
+        return dialogBox;
+    }
+
 }

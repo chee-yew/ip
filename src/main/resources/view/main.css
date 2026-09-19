@@ -38,6 +38,12 @@
     -fx-padding: 9px 13px 9px 13px;
 }
 
+.error-dialog .dialog-text {
+    -fx-background-color: #fff1f0;
+    -fx-border-color: #e7a09a;
+    -fx-text-fill: #8f2921;
+}
+
 .text-field {
     -fx-font-size: 14px;
     -fx-background-color: #ffffff;
