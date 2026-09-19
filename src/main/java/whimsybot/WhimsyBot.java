@@ -352,6 +352,10 @@ public class WhimsyBot {
     }
 
     private void saveTasks() throws WhimsyBotException {
-        storage.save(tasks.toArray(), tasks.size());
+        try {
+            storage.save(tasks.toArray(), tasks.size());
+        } catch (StorageException e) {
+            throw new WhimsyBotException(e.getMessage());
+        }
     }
 }
