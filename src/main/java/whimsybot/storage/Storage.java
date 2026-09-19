@@ -36,7 +36,7 @@ public class Storage {
                 lines.add(serialize(tasks[i]));
             }
             Files.write(FILE_PATH, lines, StandardCharsets.UTF_8);
-        } catch (IOException e) {
+        } catch (IOException | SecurityException e) {
             throw new StorageException(
                     "Unable to save your tasks. Please check that the data folder is writable.", e);
         }
@@ -80,7 +80,7 @@ public class Storage {
                     tasks.add(task);
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | SecurityException e) {
             throw new StorageException(
                     "Unable to load your saved tasks. Please check that the data file is readable.", e);
         }

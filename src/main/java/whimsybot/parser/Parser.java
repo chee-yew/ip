@@ -1,5 +1,7 @@
 package whimsybot.parser;
 
+import java.util.Locale;
+
 /** Parses the command word and arguments from a line entered by the user. */
 public class Parser {
     private Parser() {
@@ -17,7 +19,7 @@ public class Parser {
             return new String[] {"", ""};
         }
         String[] splitCommand = command.trim().split("\\s+", 2);
-        String commandWord = splitCommand[0].toLowerCase();
+        String commandWord = splitCommand[0].toLowerCase(Locale.ROOT);
         String arguments = splitCommand.length > 1 ? splitCommand[1].trim() : "";
         return new String[] {commandWord, arguments};
     }

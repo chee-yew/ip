@@ -39,7 +39,7 @@ public class WhimsyBot {
             savedTasks = storage.load();
         } catch (StorageException e) {
             savedTasks = List.of();
-            startupWarning = e.getMessage();
+            startupWarning = "OOPS!!! " + e.getMessage();
         }
         tasks = new TaskList(savedTasks);
     }
@@ -355,7 +355,7 @@ public class WhimsyBot {
         try {
             storage.save(tasks.toArray(), tasks.size());
         } catch (StorageException e) {
-            throw new WhimsyBotException(e.getMessage());
+            throw new WhimsyBotException("OOPS!!! " + e.getMessage());
         }
     }
 }
