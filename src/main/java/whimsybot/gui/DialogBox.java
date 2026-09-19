@@ -36,7 +36,7 @@ public class DialogBox extends HBox {
 
     /** Creates a dialog box aligned as a Whimsy Bot message. */
     public static DialogBox getWhimsyBotDialog(String text) {
-        DialogBox dialogBox = new DialogBox(text, "🦄", "bot-dialog");
+        DialogBox dialogBox = new DialogBox(text, "🧚", "bot-dialog");
         dialogBox.setAlignment(Pos.TOP_LEFT);
         dialogBox.getChildren().remove(dialogBox.avatar);
         dialogBox.getChildren().add(0, dialogBox.avatar);

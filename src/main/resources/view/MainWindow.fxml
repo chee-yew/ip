@@ -20,7 +20,7 @@
                 <VBox fx:id="dialogContainer" spacing="6.0" styleClass="dialog-container" />
             </content>
         </ScrollPane>
-        <TextField fx:id="userInput" promptText="Type a command..." styleClass="command-input"
+        <TextField fx:id="userInput" promptText="Type a command or quest..." styleClass="command-input"
                    onAction="#handleUserInput"
                    AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="16.0"
                    AnchorPane.rightAnchor="104.0" />

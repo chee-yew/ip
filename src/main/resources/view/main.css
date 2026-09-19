@@ -30,9 +30,9 @@
 }
 
 .bot-dialog .dialog-text {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #fffdf2;
     -fx-background-radius: 4px 15px 15px 15px;
-    -fx-border-color: #e2dcef;
+    -fx-border-color: #e3d19a;
     -fx-border-radius: 4px 15px 15px 15px;
     -fx-border-width: 1px;
     -fx-padding: 9px 13px 9px 13px;
@@ -76,6 +76,6 @@
 }
 
 .avatar {
-    -fx-font-size: 18px;
-    -fx-padding: 4px 6px 0 6px;
+    -fx-font-size: 20px;
+    -fx-padding: 3px 6px 0 6px;
 }
